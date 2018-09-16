@@ -1,0 +1,32 @@
+{
+  "modules": true,
+  "plugins": {
+    "postcss-inject": {
+      "injectTo": "fileStart",
+      "cssFilePath": "./client/styles/variables.css"
+    },
+    "postcss-browser-reporter": {},
+    "postcss-reporter": {},
+    "postcss-modules": {
+      "generateScopedName": "[name]_[local]_[hash:base64:5]"
+    },
+    "postcss-custom-properties": {},
+    "postcss-calc": {},
+    "postcss-nesting": {},
+    "postcss-custom-media": {},
+    "postcss-media-minmax": {},
+    "postcss-custom-selectors": {},
+    "postcss-color-hwb": {},
+    "postcss-color-hsl": {},
+    "postcss-color-rgb": {},
+    "postcss-color-gray": {},
+    "postcss-color-hex-alpha": {},
+    "postcss-color-function": {},
+    "postcss-pseudoelements": {},
+    "postcss-selector-matches": {},
+    "postcss-pseudo-class-any-link": {},
+    "postcss-color-rgba-fallback": {},
+    "autoprefixer": {},
+    "postcss-apply": {},
+  }
+}
