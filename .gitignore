@@ -9,5 +9,5 @@ npm-debug.log
 .jshintignore
 .cache
 .localstorage
-_dev
+__dev__
 newrelic_agent.log

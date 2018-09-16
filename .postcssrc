@@ -1,10 +1,6 @@
 {
-  "modules": true,
+  "modules": false,
   "plugins": {
-    "postcss-inject": {
-      "injectTo": "fileStart",
-      "cssFilePath": "./client/styles/variables.css"
-    },
     "postcss-browser-reporter": {},
     "postcss-reporter": {},
     "postcss-modules": {

@@ -1,0 +1,14 @@
+.Hero {
+  padding: 40px;
+}
+
+.Hero > h1 {
+  text-align: center;
+  font-size: 30px;
+}
+
+.Hero > h1 > span {
+  display: block;
+  font-family: 'Codystar', cursive;
+  font-size: 60px;
+}
