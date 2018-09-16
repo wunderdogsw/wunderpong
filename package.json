@@ -13,7 +13,7 @@
     "build:server": "run-s bundle:server",
     "bundle:client": "rimraf dist/client && NODE_ENV=production parcel build ./client/index.html --no-source-maps --no-cache -d dist/client --public-url /",
     "bundle:server": "rimraf dist/server && NODE_ENV=production parcel build ./server/index.js --no-source-maps --no-cache -d dist/server -t node",
-    "deploy": "run-s build:client build:server helper:commit-files-to-heroku",
+    "deploy": "run-s build helper:commit-files-to-heroku",
     "start": "node dist/server/index.js",
     "helper:cleanup-dist": "rimraf dist",
     "helper:commit-files-to-heroku": "git add dist && git add package.json && git add yarn.lock && git commit -m \"New release\" && git push heroku master"
