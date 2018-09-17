@@ -78,9 +78,9 @@ app.post('/api/ladder', async (req, res) => {
   }
   const ladder = resolveLadderFromMatches(matches)
   res.status(200).json({
-    text: ladder
-      .map((name, i) => `\n${i+1}. ${name}${i === 0 ? ' 👑' : ''}`)
-      .join('')
+    text: '>>> \n' + ladder
+      .map((name, i) => `${i+1}. ${name}${i === 0 ? ' 👑' : ''}`)
+      .join('\n')
   })
 })
 
