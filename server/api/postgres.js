@@ -33,6 +33,7 @@ export const getMatches = async () => {
   const res = await client.query(`
     SELECT *
     FROM matches
+    ORDER BY created_at ASC
   `)
   await client.release()
   return res.rows
