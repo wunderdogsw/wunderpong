@@ -28,7 +28,9 @@ export default class extends Component {
       <div className="Ladder">
         <ol>
           { this.state.ladder.map((name, i) => (
-            <li key={i+name}>{ name } { i === 0 ? '👑' : '' }</li>
+            <li key={i+name}>
+              { i === 0 ? '👑' : `${i+1}.` } { name } { i === 0 ? '👑' : '' }
+            </li>
           ))}
         </ol>
       </div>
