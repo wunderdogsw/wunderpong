@@ -52,7 +52,7 @@
 
 @for $i from 1 to 80 {
   .Ladder > ol > * > li:nth-child($i) {
-    animation-delay: calc(500ms * $i);
+    animation-delay: calc(50ms * $i);
   }
 }
 
