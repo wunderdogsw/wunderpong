@@ -5,6 +5,7 @@
   align-items: center;
   font-size: 22px;
   text-transform: uppercase;
+  background-color: #fffef7;
   color: #236791;
 }
 
@@ -37,7 +38,7 @@
   min-height: 70px;
   font-size: 32px;
   background-color: #7ed4e8;
-  color: #fff;
+  color: #fffef7;
 }
 
 .NameBox--king > .NumberBox.ShadowBox {
@@ -51,7 +52,7 @@
   left: 4px;
   right: 4px;
   height: 12px;
-  background-color: #fff;
+  background-color: #fffef7;
   opacity: 0.3;
   border-radius: 12px;
 }

@@ -1,7 +1,14 @@
 import './index.css'
 import React, { Component } from 'react'
+// import shuffle from 'lodash.shuffle'
 import { getLadder } from 'Client/api'
 import NameBox from 'Client/components/NameBox'
+import Lottie from 'Client/components/Lottie'
+
+import lottieCrown from './crown.json'
+
+
+
 
 export default class extends Component {
   state = {
@@ -21,6 +28,7 @@ export default class extends Component {
   getLadder = async () => {
     const ladder = await getLadder()
     this.setState({ ladder })
+    // this.setState({ ladder: shuffle(ladder) })
     this.ladderTimeout = setTimeout(this.getLadder, 10000)
   }
 
@@ -40,6 +48,7 @@ export default class extends Component {
                 number="1."
                 king
                 children={ first }
+                key={ first }
               />
             </li>
             <li>
@@ -47,6 +56,7 @@ export default class extends Component {
                 number="2."
                 topThree
                 children={ second }
+                key={ second }
               />
             </li>
             <li>
@@ -54,6 +64,7 @@ export default class extends Component {
                 number="3."
                 topThree
                 children={ third }
+                key={ third }
               />
             </li>
           </div>
@@ -68,6 +79,9 @@ export default class extends Component {
             ))}
           </div>
         </ol>
+        <Lottie
+          animationData={ lottieCrown }
+        />
       </div>
     )
   }

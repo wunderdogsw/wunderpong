@@ -1,6 +1,7 @@
 {
   "modules": false,
   "plugins": {
+    "postcss-for": {},
     "postcss-browser-reporter": {},
     "postcss-reporter": {},
     "postcss-modules": {
