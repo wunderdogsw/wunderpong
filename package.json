@@ -86,7 +86,6 @@
     "lodash.pick": "^4.4.0",
     "lodash.reverse": "^4.0.1",
     "lodash.set": "^4.3.2",
-    "lodash.shuffle": "^4.2.0",
     "lodash.snakecase": "^4.1.1",
     "lodash.sortby": "^4.7.0",
     "lodash.throttle": "^4.1.1",
