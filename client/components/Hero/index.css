@@ -1,59 +1,31 @@
 .Hero {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
   padding: 0;
-  padding-top: 40px;
+  overflow: hidden;
+  height: 440px;
+
+  @media (width < 1024px) {
+    height: 290px;
+  }
 }
 
 .Hero > h1 {
   width: 0;
   height: 0;
   overflow: hidden;
+  margin: 0;
 }
 
-.Hero > img {
-  display: block;
-  width: 845px;
-  height: 405px;
-}
+.Hero > .Lottie {
+  position: absolute;
+  width: 1920px;
+  top: -60px;
+  left: 50%;
+  margin-left: calc(-1920px / 2);
 
-
-
-
-
-
-
-
-
-.Hero > h1 > span {
-  display: block;
-  font-family: 'Codystar', cursive;
-  font-size: 60px;
-  animation: shake 0.82s linear;
-  animation-iteration-count: infinite;
-}
-
-
-
-@keyframes shake {
-  10%, 90% {
-    transform: translate3d(-2px, 1px, 0);
-  }
-
-  20%, 80% {
-    transform: translate3d(2px, 0, 0);
-  }
-
-  30%, 50%, 70% {
-    transform: translate3d(-2px, -3px, 0);
-  }
-
-  100%, 0%, 40%, 60% {
-    transform: translate3d(4px, 0, 0);
-  }
-
-  30% {
-    transform: translate3d(-2px, 3px, 0);
+  @media (width < 1024px) {
+    width: 1200px;
+    top: -20px;
+    margin-left: calc(-1200px / 2);
   }
 }

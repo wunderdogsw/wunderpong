@@ -48,11 +48,24 @@
   animation-iteration-count: 1;
   animation-duration: 1000ms;
   animation-timing-function: cubic-bezier(0,.43,0,1);
+
+  & > .NameBox--king {
+    animation-name: bounce;
+    animation-fill-mode: backwards;
+    animation-iteration-count: infinite;
+    animation-duration: calc(3400ms / 2);
+    animation-delay: 0;
+    animation-timing-function: cubic-bezier(0,.43,0,1);
+  }
 }
 
-@for $i from 1 to 80 {
+@for $i from 0 to 80 {
   .Ladder > ol > * > li:nth-child($i) {
     animation-delay: calc(50ms * $i);
+
+    /* & > * {
+      animation-delay: calc(500ms * $i);
+    } */
   }
 }
 
@@ -67,5 +80,14 @@
   100% {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 100% {
+    transform: scale3d(1, 1, 1);
+  }
+  10% {
+    transform: scale3d(1.05, 1.05, 1);
   }
 }
