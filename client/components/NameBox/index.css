@@ -42,7 +42,7 @@
 }
 
 .NameBox--king > .NumberBox.ShadowBox {
-  display: none;
+  opacity: 0;
 }
 
 .NameBox--king::before {
