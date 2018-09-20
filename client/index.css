@@ -8,5 +8,6 @@ html, body {
 
 
 #root {
-
+  padding: 0 40px;
+  padding-bottom: 40px;
 }
