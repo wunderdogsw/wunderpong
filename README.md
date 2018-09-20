@@ -9,3 +9,12 @@
 `/pingpongmatch <winner> <loser>` -  adds new match record
 
 `/pingpongladder` - displays current player ladder
+
+
+
+
+### .env
+```
+DATABASE_URL=<postgres url>
+PRODUCTION_API_URL=https://wunderpong.herokuapp.com/api
+```
