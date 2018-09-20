@@ -1,6 +1,7 @@
 import './index.css'
 import React, { Component } from 'react'
 import { getLadder } from 'Client/api'
+import NameBox from 'Client/components/NameBox'
 
 export default class extends Component {
   state = {
@@ -24,14 +25,48 @@ export default class extends Component {
   }
 
   render() {
+    const { ladder } = this.state
+
+    if (!ladder.length) return <div className="Ladder" />
+
+    const [ first, second, third, ...rest ] = this.state.ladder
+
     return (
       <div className="Ladder">
         <ol>
-          { this.state.ladder.map((name, i) => (
-            <li key={i+name}>
-              { i === 0 ? '👑' : `${i+1}.` } { name } { i === 0 ? '👑' : '' }
+          <div className="Ladder__topThree">
+            <li>
+              <NameBox
+                number="1."
+                king
+                children={ first }
+              />
             </li>
-          ))}
+            <li>
+              <NameBox
+                number="2."
+                topThree
+                children={ second }
+              />
+            </li>
+            <li>
+              <NameBox
+                number="3."
+                topThree
+                children={ third }
+              />
+            </li>
+          </div>
+          <div className="Ladder__rest">
+            { rest.map((name, i) => (
+              <li key={ i + name }>
+                <NameBox
+                  number={ `${i + 4}.` }
+                  children={ name }
+                />
+              </li>
+            ))}
+          </div>
         </ol>
       </div>
     )
