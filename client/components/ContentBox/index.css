@@ -1,0 +1,37 @@
+.ContentBox {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 580px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 65px;
+  border-radius: 20px;
+  background-color: #fffef7;
+  box-shadow:
+    0 10px 0 2px #19567c,
+    inset 0 0 0 5px #2c70a0,
+    inset 0 0 0 15px #f9e7d2;
+}
+
+.ContentBox > span {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  width: 20px;
+  height: 20px;
+  background-color: #f9e7d2;
+  border-radius: 20px;
+
+  &:nth-child(2),
+  &:nth-child(4) {
+    left: auto;
+    right: 25px;
+  }
+
+  &:nth-child(3),
+  &:nth-child(4) {
+    top: auto;
+    bottom: 25px;
+  }
+
+}

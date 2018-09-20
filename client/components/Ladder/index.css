@@ -1,15 +1,71 @@
 .Ladder {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
 }
 
 .Ladder > ol {
-  font-size: 20px;
-  padding: 0;
+  list-style: none;
   margin: 0;
+  padding: 0;
 }
 
-.Ladder > ol > li {
-  margin-bottom: 10px;
+.Ladder__topThree {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 75px 0 60px 0;
+  max-width: 870px;
+  margin-left: auto;
+  margin-right: auto;
+
+  & > :nth-child(2) {
+    order: -1;
+  }
+}
+
+.Ladder__rest {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+}
+
+
+
+
+.Ladder > .Lottie {
+  position: absolute;
+  top: -110px;
+  left: 50%;
+  width: 340px;
+  transform: translate(-50%, 0);
+}
+
+
+
+
+.Ladder > ol > * > li {
+  animation-name: appear;
+  animation-fill-mode: backwards;
+  animation-iteration-count: 1;
+  animation-duration: 1000ms;
+  animation-timing-function: cubic-bezier(0,.43,0,1);
+}
+
+@for $i from 1 to 80 {
+  .Ladder > ol > * > li:nth-child($i) {
+    animation-delay: calc(500ms * $i);
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
