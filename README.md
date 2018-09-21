@@ -15,7 +15,7 @@ Optimized for fullhd display. Might optimize for mobile at somepoint.
 `/pingpongladder` - displays current player ladder
 
 
-### TODO
+### todo
 
 * Facial recognition system for adding matches
 
