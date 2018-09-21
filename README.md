@@ -1,5 +1,7 @@
 # Wunderpong player ladder for wunderdog ping pong games 🏓
 
+Optimized for fullhd display. Might optimize for mobile at somepoint.
+
 
 ### heroku url
 [wunderpong.herokuapp.com](http://wunderpong.herokuapp.com/)
