@@ -1,12 +1,18 @@
 .NameBox {
   position: relative;
   display: flex;
+  box-sizing: border-box;
+  padding-left: 10px;
   justify-content: center;
   align-items: center;
-  font-size: 22px;
+  font-size: 20px;
   text-transform: uppercase;
   background-color: #fffef7;
   color: #236791;
+}
+
+.NameBox.ShadowBox {
+  min-width: 150px;
 }
 
 .NameBox > .NumberBox {
@@ -21,6 +27,7 @@
 .NameBox--topThree.ShadowBox {
   min-height: 60px;
   min-width: 220px;
+  font-size: 22px;
 }
 
 .NameBox--topThree > .NumberBox {
