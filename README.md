@@ -1,5 +1,9 @@
 # Wunderpong player ladder for wunderdog ping pong games 🏓
 
+![Table Tennis Smashdown](https://i.imgur.com/fEtlmrI.png)
+
+Optimized for fullhd display. Might optimize for mobile at somepoint.
+
 
 ### heroku url
 [wunderpong.herokuapp.com](http://wunderpong.herokuapp.com/)
@@ -11,6 +15,9 @@
 `/pingpongladder` - displays current player ladder
 
 
+### todo
+
+* Facial recognition system for adding matches
 
 
 ### .env
