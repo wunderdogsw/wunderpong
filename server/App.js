@@ -1,4 +1,5 @@
 import express from 'express'
+import path from 'path'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import uniq from 'lodash.uniq'
@@ -110,6 +111,12 @@ app.get('/api/players', async (req, res) => {
   }
   const players = uniq(flatten(matches.map(x => [x.winner, x.loser]))).sort()
   res.status(200).json(players)
+})
+
+
+app.get('*', (_, res) => {
+  console.log(__dirname)
+  res.sendFile(__dirname + '/dist/client/index.html')
 })
 
 
