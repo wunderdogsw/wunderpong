@@ -11,3 +11,4 @@ npm-debug.log
 .localstorage
 __dev__
 newrelic_agent.log
+.yarn-error.log
