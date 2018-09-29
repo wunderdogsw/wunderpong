@@ -115,8 +115,7 @@ app.get('/api/players', async (req, res) => {
 
 
 app.get('*', (_, res) => {
-  console.log(__dirname)
-  res.sendFile(__dirname + '/dist/client/index.html')
+  res.sendFile(path.resolve(__dirname + '/../client/index.html'))
 })
 
 
