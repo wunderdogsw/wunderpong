@@ -9,7 +9,7 @@
 }
 
 .Ladder__topThree {
-  display: flex;
+  /* display: flex;
   justify-content: space-around;
   align-items: flex-end;
   padding: 75px 0 60px 0;
@@ -19,8 +19,45 @@
 
   & > :nth-child(2) {
     order: -1;
+  } */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 75px;
+  margin-bottom: 20px;
+
+  & > * {
+    margin-bottom: 20px;
   }
 }
+
+@media (width >= 1024px) {
+  .Ladder__topThree {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 75px 0 60px 0;
+    max-width: 870px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+
+    & > * {
+      margin-bottom: 0;
+    }
+
+    & > :nth-child(2) {
+      order: -1;
+    }
+  }
+}
+
+
+
+
 
 .Ladder__rest {
   display: grid;

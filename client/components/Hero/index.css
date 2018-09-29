@@ -2,12 +2,17 @@
   position: relative;
   padding: 0;
   overflow: hidden;
-  height: 440px;
+  height: 180px;
 
-  @media (width < 1024px) {
-    height: 290px;
+  @media (width >= 768px) {
+    height: 330px;
+  }
+  
+  @media (width >= 1024px) {
+    height: 440px;
   }
 }
+
 
 .Hero > h1 {
   width: 0;
@@ -16,16 +21,23 @@
   margin: 0;
 }
 
+
 .Hero > .Lottie {
   position: absolute;
-  width: 1920px;
-  top: -60px;
   left: 50%;
-  margin-left: calc(-1920px / 2);
+  width: 768px;
+  top: -20px;
+  margin-left: calc(-768px / 2);
 
-  @media (width < 1024px) {
-    width: 1200px;
-    top: -20px;
-    margin-left: calc(-1200px / 2);
+  @media (width >= 768px) {
+    width: 1440px;
+    top: -45px;
+    margin-left: calc(-1440px / 2);
+  }
+
+  @media (width >= 1024px) {
+    width: 1920px;
+    top: -60px;
+    margin-left: calc(-1920px / 2);
   }
 }

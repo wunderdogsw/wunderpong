@@ -26,14 +26,17 @@
 
 .NameBox--topThree.ShadowBox {
   min-height: 60px;
-  min-width: 220px;
+  min-width: 225px;
   font-size: 22px;
+  padding-left: 0;
 }
 
-.NameBox--topThree > .NumberBox {
-  top: -70px;
-  left: 50%;
-  transform: translate(-50%, 0);
+@media (width >= 1024px) {
+  .NameBox--topThree > .NumberBox {
+    top: -70px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
 }
 
 
@@ -44,12 +47,19 @@
   min-width: 300px;
   min-height: 70px;
   font-size: 32px;
+  padding-left: 0;
   background-color: #7ed4e8;
   color: #fffef7;
 }
 
 .NameBox--king > .NumberBox.ShadowBox {
-  opacity: 0;
+  min-width: 50px;
+}
+
+@media (width >= 1024px) {
+  .NameBox--king > .NumberBox.ShadowBox {
+    opacity: 0;
+  }
 }
 
 .NameBox--king::before {

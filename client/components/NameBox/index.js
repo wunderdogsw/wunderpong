@@ -11,7 +11,7 @@ export default ({ children, number, topThree, king }) => (
     king && 'NameBox--king',
   )}>
     { number && (
-      <NumberBox glossy={ topThree }>
+      <NumberBox glossy={ topThree || king }>
         { `${number} ` }
       </NumberBox>
     )}
