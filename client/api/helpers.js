@@ -10,3 +10,9 @@ export const fetchJson = async (url, options = {}) => {
   }
   return await res.json()
 }
+
+export const sanitizeName = name => name
+  .toLowerCase()
+  .trim()
+  .replace(/[^a-z0-9 ]/gi, '')
+  .replace(/[ ]{1,}/gi, '_')

@@ -1,0 +1,24 @@
+.PlayerSelect {
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 3px solid #236791;
+  border-radius: 10px;
+  box-shadow: 0 7px 0 #236791;
+  color: #236791;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 50px;
+  min-width: 220px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: left;
+  text-align-last: left;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}

@@ -22,7 +22,8 @@ export default class extends Component {
   }
 
   getLadder = async () => {
-    const ladder = await getLadder()
+    let ladder = await getLadder()
+    ladder.map(x => x.replace(/_/gi, ' '))
     this.setState({ ladder })
     this.ladderTimeout = setTimeout(this.getLadder, 10000)
   }

@@ -1,4 +1,7 @@
-import { fetchJson } from './helpers'
+import {
+  fetchJson,
+  sanitizeName,
+} from './helpers'
 
 
 
@@ -8,3 +11,8 @@ const API_URL = process.env.NODE_ENV === 'production' ?
 
 
 export const getLadder = () => fetchJson(`${API_URL}/ladder`)
+export const getPlayers = () => fetchJson(`${API_URL}/players`)
+export const postMatch = (winner, loser) => fetchJson(`${API_URL}/match`, {
+  method: 'POST',
+  body: JSON.stringify({ text: `${sanitizeName(winner)} ${sanitizeName(loser)}`})
+})

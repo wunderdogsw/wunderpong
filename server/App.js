@@ -38,7 +38,7 @@ app.post('/api/match', async (req, res) => {
   const players = text
     .split(' ')
     .filter(x => Boolean(x.trim()))
-    .map(x => x.toLowerCase().trim().replace(/[^a-z]/gi, ''))
+    .map(x => x.toLowerCase().trim().replace(/[^a-z_]/gi, ''))
 
   if (players.length !== 2) {
     return res.sendStatus(400)
@@ -50,7 +50,7 @@ app.post('/api/match', async (req, res) => {
   try {
     await postMatch(winner, loser)
     res.status(200).json({
-      text: `Got it, ${winner} won ${loser} 🏆 \n _ps. notify luffis if you made a mistake_`
+      text: `Got it, ${winner.replace(/_{1,}/gi, ' ')} won ${loser.replace(/_{1,}/gi, ' ')} 🏆 \n _ps. notify luffis if you made a mistake_`
     })
   } catch (error) {
     console.error('[ERROR]', error)
