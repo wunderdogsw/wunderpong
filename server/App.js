@@ -1,6 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import uniq from 'lodash.uniq'
+import flatten from 'lodash.flatten'
 import { Server as httpServer } from 'http'
 import {
   postMatch,
@@ -95,6 +97,19 @@ app.get('/api/ladder', async (req, res) => {
   }
   const ladder = resolveLadderFromMatches(matches)
   res.status(200).json(ladder)
+})
+
+app.get('/api/players', async (req, res) => {
+  console.info('GET /api/players')
+  let matches
+  try {
+    matches = await getMatches()
+  } catch (error) {
+    console.error('[ERROR]', error)
+    return res.sendStatus(500)
+  }
+  const players = uniq(flatten(matches.map(x => [x.winner, x.loser]))).sort()
+  res.status(200).json(players)
 })
 
 
