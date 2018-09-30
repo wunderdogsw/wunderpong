@@ -1,0 +1,33 @@
+@media ( width >= 1024px) {
+  .Qr {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    width: 80px;
+    font-size: 12px;
+    color: #19567c;
+    text-transform: uppercase;
+    opacity: 0.5;
+
+    & > svg {
+      width: 100%;
+      height: auto;
+    }
+
+    & > svg > :first-child {
+      fill: transparent;
+    }
+
+    & > svg > :last-child {
+      fill: #19567c;
+    }
+
+    & > span {
+      margin-top: 10px;
+    }
+  }
+}
