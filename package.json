@@ -27,6 +27,7 @@
   "devDependencies": {
     "autoprefixer": "^8.4.1",
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -72,6 +73,7 @@
     "date-fns": "^1.29.0",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "face-recognition": "^0.9.3",
     "google-auth-library": "^1.5.0",
     "googleapis": "^30.0.0",
     "inline-style-prefixer": "^4.0.0",
@@ -94,6 +96,7 @@
     "memory-cache": "^0.2.0",
     "newrelic": "^4.1.4",
     "node-fetch": "^2.1.2",
+    "opencv4nodejs": "^4.9.0",
     "pg": "^7.4.3",
     "pg-format": "^1.0.4",
     "prompt-confirm": "^2.0.4",

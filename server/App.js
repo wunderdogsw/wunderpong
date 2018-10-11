@@ -11,6 +11,7 @@ import {
 } from 'Server/api'
 import {
   resolveLadderFromMatches,
+  whoIsIt,
 } from 'Server/utils'
 
 
@@ -112,6 +113,13 @@ app.get('/api/players', async (req, res) => {
   const players = uniq(flatten(matches.map(x => [x.winner, x.loser]))).sort()
   res.status(200).json(players)
 })
+
+app.post('/whoisit', async (req, res) => {
+    console.log('POST /api/whoisit')
+    const imageBuffer = new Buffer(req.body.image.split(',')[1], 'base64');
+    const players = FaceRecognitor.whoIsIt(imageBuffer);
+    res.json({"playerName": players});
+});
 
 
 app.get('*', (_, res) => {
