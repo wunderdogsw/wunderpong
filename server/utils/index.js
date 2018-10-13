@@ -1,3 +1,5 @@
+export * from './face-recognitor'
+
 export const resolveLadderFromMatches = matches => {
   let ladder = []
   matches.forEach(match => {
