@@ -33,10 +33,6 @@
   dependencies:
     commander "*"
 
-"@types/node@>6":
-  version "10.11.7"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.7.tgz#0e75ca9357d646ca754016ca1d68a127ad7e7300"
-
 "@types/semver@^5.4.0":
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-5.5.0.tgz#146c2a29ee7d3bae4bf2fcb274636e264c813c45"
@@ -4347,12 +4343,6 @@ lru-cache@^4.0.1, lru-cache@^4.1.1:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
-macro-inferno@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/macro-inferno/-/macro-inferno-0.2.2.tgz#57dd960f9fa3e117ef9f46dbf0629d08d1d04c5f"
-  dependencies:
-    nan "^2.7.0"
-
 magic-string@^0.22.4:
   version "0.22.5"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.22.5.tgz#8e9cf5afddf44385c1da5bc2a6a0dbd10b03657e"
@@ -4590,7 +4580,7 @@ nan@^2.0.7, nan@^2.9.2:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.11.0.tgz#574e360e4d954ab16966ec102c0c049fd961a099"
 
-nan@^2.11.0, nan@^2.7.0, nan@^2.8.0:
+nan@^2.7.0, nan@^2.8.0:
   version "2.11.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.11.1.tgz#90e22bccb8ca57ea4cd37cc83d3819b52eea6766"
 
@@ -4615,12 +4605,6 @@ native-node-utils@0.0.4:
   resolved "http://registry.npmjs.org/native-node-utils/-/native-node-utils-0.0.4.tgz#9b739e589da441f9b4716de1054c3d53a0894198"
   dependencies:
     nan "^2.8.0"
-
-native-node-utils@0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/native-node-utils/-/native-node-utils-0.1.4.tgz#7223c70786a952868ea5d125b4810053c165dcec"
-  dependencies:
-    nan "^2.11.0"
 
 natural-compare@^1.4.0:
   version "1.4.0"
@@ -4816,7 +4800,7 @@ npm-run-path@^2.0.0:
   dependencies:
     path-key "^2.0.0"
 
-npmlog@^4.0.2, npmlog@^4.1.2:
+npmlog@^4.0.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/npmlog/-/npmlog-4.1.2.tgz#08a7f2a8bf734604779a9efa4ad5cc717abb954b"
   dependencies:
@@ -4919,23 +4903,6 @@ onetime@^2.0.0:
   resolved "https://registry.yarnpkg.com/onetime/-/onetime-2.0.1.tgz#067428230fd67443b2794b22bba528b6867962d4"
   dependencies:
     mimic-fn "^1.0.0"
-
-opencv-build@0.0.15:
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/opencv-build/-/opencv-build-0.0.15.tgz#14c15ed2edada9f1ab3283ec4dda11625e356fc4"
-  dependencies:
-    npmlog "^4.1.2"
-
-opencv4nodejs@^4.9.0:
-  version "4.9.0"
-  resolved "https://registry.yarnpkg.com/opencv4nodejs/-/opencv4nodejs-4.9.0.tgz#29c7eddcb9d09550e876650539973dff1ec94460"
-  dependencies:
-    macro-inferno "^0.2.2"
-    nan "^2.11.0"
-    native-node-utils "0.1.4"
-    opencv-build "0.0.15"
-  optionalDependencies:
-    "@types/node" ">6"
 
 opn@^5.1.0:
   version "5.3.0"
