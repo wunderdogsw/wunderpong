@@ -1,4 +1,5 @@
 export * from './face-recognitor'
+export * from './image-utils'
 
 export const resolveLadderFromMatches = matches => {
   let ladder = []

@@ -131,7 +131,7 @@
   transition-timing-function: cubic-bezier(.58,.01,0,1);
 }
 
-.PlayerCamera--big .PlayerCamera__timer {
+.PlayerCamera--timer .PlayerCamera__timer {
   transform: translate3d(-50%, -50%, 0) scale3d(1, 1, 1);
 }
 
