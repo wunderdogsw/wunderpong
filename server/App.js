@@ -12,6 +12,8 @@ import {
 import {
   resolveLadderFromMatches,
   whoIsIt,
+  saveImage,
+  removeImage,
 } from 'Server/utils'
 
 
@@ -119,17 +121,18 @@ app.post('/api/whoisit', async (req, res) => {
 
     const { image } = req.body
     if (!image) return res.sendStatus(400)
-    
-    let players
 
+    const imagePath = await saveImage(new Buffer(image.split(',')[1], 'base64'))
+
+    let players
     try {
-      const imageBuffer = new Buffer(req.body.image.split(',')[1], 'base64')
-      players = whoIsIt(imageBuffer)
+      players = whoIsIt(imagePath)
     } catch(error) {
       console.error('[ERROR]', error)
       return res.sendStatus(500)
     }
 
+    removeImage(imagePath)
     res.json({ players })
 })
 
