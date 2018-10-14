@@ -114,6 +114,8 @@ export default class PlayerCamera extends Component {
   }
 
   sendMatch = async () => {
+    if (!this.mounted) return
+
     this.setState({
       sendingMatch: true,
       matchMessage: 'Saving...',
@@ -163,7 +165,7 @@ export default class PlayerCamera extends Component {
     const videoConstraints = {
       width: 1280 / 2,
       height: 800 / 2,
-      facingMode: "user"
+      facingMode: 'user',
     }
     const { players, timerTime, sendingMatch, matchMessage } = this.state
 
@@ -184,6 +186,7 @@ export default class PlayerCamera extends Component {
             ref={ this.cameraRef }
             onUserMedia={ this.handleUserMedia }
             videoConstraints={ videoConstraints }
+            screenshotFormat="image/jpeg"
             audio={ false }
           />
 
