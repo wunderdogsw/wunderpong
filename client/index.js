@@ -9,6 +9,7 @@ import ContentBox from 'Client/components/ContentBox'
 import Ladder from 'Client/components/Ladder'
 import NewMatch from 'Client/components/NewMatch'
 import Qr from 'Client/components/Qr'
+import PlayerCamera from 'Client/components/PlayerCamera'
 
 const App = () => (
   <BrowserRouter>
@@ -26,6 +27,7 @@ const App = () => (
               <Ladder />
             </ContentBox>
             <Qr value={ `${window.location}match`} />
+            <PlayerCamera />
           </Fragment>
         )}
       />

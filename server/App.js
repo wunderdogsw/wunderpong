@@ -114,12 +114,24 @@ app.get('/api/players', async (req, res) => {
   res.status(200).json(players)
 })
 
-app.post('/whoisit', async (req, res) => {
+app.post('/api/whoisit', async (req, res) => {
     console.log('POST /api/whoisit')
-    const imageBuffer = new Buffer(req.body.image.split(',')[1], 'base64');
-    const players = FaceRecognitor.whoIsIt(imageBuffer);
-    res.json({"playerName": players});
-});
+
+    const { image } = req.body
+    if (!image) return res.sendStatus(400)
+    
+    let players
+
+    try {
+      const imageBuffer = new Buffer(req.body.image.split(',')[1], 'base64')
+      players = whoIsIt(imageBuffer)
+    } catch(error) {
+      console.error('[ERROR]', error)
+      return res.sendStatus(500)
+    }
+
+    res.json({ players })
+})
 
 
 app.get('*', (_, res) => {

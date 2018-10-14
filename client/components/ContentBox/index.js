@@ -3,10 +3,10 @@ import React from 'react'
 
 export default ({ children }) => (
   <div className="ContentBox">
-    <span />
-    <span />
-    <span />
-    <span />
+    <span className="ContentBox__staple" />
+    <span className="ContentBox__staple" />
+    <span className="ContentBox__staple" />
+    <span className="ContentBox__staple" />
     { children }
   </div>
 )

@@ -16,3 +16,7 @@ export const postMatch = (winner, loser) => fetchJson(`${API_URL}/match`, {
   method: 'POST',
   body: JSON.stringify({ text: `${sanitizeName(winner)} ${sanitizeName(loser)}`})
 })
+export const postScreenshot = image => fetchJson(`${API_URL}/whoisit`, {
+  method: 'POST',
+  body: JSON.stringify({ image })
+})

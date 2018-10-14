@@ -4,12 +4,12 @@
 
 @media ( width >= 1024px) {
   .Qr {
+    position: absolute;
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: absolute;
     top: 40px;
     right: 40px;
     width: 180px;

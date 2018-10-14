@@ -18,7 +18,7 @@
   }
 }
 
-.ContentBox > span {
+.ContentBox__staple {
   position: absolute;
   top: 25px;
   left: 25px;
