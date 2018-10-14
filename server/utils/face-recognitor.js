@@ -6,7 +6,14 @@ const fr = faceRecognition.withCv(cv)
 const detector = fr.FaceDetector()
 
 // Loads a presaved model from ./model.json
-const model = JSON.parse(fs.readFileSync('./server/utils/model.json'))
+const modelPath = process.env.NODE_ENV === 'production' ?
+  'model.json' :
+  './server/utils/model.json'
+
+console.log(modelPath)
+
+const model = JSON.parse(fs.readFileSync(modelPath))
+console.log(model)
 
 const recognizer = fr.FaceRecognizer()
 recognizer.load(model)
