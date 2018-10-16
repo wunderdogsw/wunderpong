@@ -17,11 +17,12 @@ Optimized for fullhd display.
 
 ### todo
 
-* Facial recognition system for adding matches
-
+* nothing here
 
 ### .env
 ```
 DATABASE_URL=<postgres url>
 PRODUCTION_API_URL=https://wunderpong.herokuapp.com/api
 ```
+
+
