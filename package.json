@@ -68,6 +68,7 @@
     "rimraf": "^2.6.2"
   },
   "dependencies": {
+    "arpad": "^1.0.2",
     "babel-register": "^6.26.0",
     "camelcase-keys": "^4.2.0",
     "classnames": "^2.2.6",
