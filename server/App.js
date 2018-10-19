@@ -4,10 +4,11 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import uniq from 'lodash.uniq'
 import flatten from 'lodash.flatten'
-import { Server as httpServer } from 'http'
 import {
   postMatch,
   getMatches,
+  getPlayer,
+  getMigrations,
 } from 'Server/api'
 import {
   resolveLadderFromMatches,
@@ -15,11 +16,11 @@ import {
   saveImage,
   removeImage,
 } from 'Server/utils'
+import Elo from 'arpad'
+const elo = new Elo()
 
 
-const PORT = process.env.PORT || 3000
 const app = express()
-const server = httpServer(app)
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -39,22 +40,24 @@ app.post('/api/match', async (req, res) => {
     return res.sendStatus(400)
   }
 
-  const players = text
+  const playerNames = text
     .split(' ')
     .filter(x => Boolean(x.trim()))
     .map(x => x.toLowerCase().trim().replace(/[^a-z_]/gi, ''))
 
-  if (players.length !== 2) {
+  if (playerNames.length !== 2) {
     return res.sendStatus(400)
   }
 
-  const winner = players[0]
-  const loser = players[1]
+  const winner = await getPlayer(playerNames[0])
+  const loser = await getPlayer(playerNames[1])
+  const new_winner_rating = elo.newRatingIfWon(winner.rating, loser.rating)
+  const new_loser_rating = elo.newRatingIfLost(loser.rating, winner.rating)
 
   try {
-    await postMatch(winner, loser)
+    await postMatch({name: winner.name, rating: new_winner_rating}, {name: loser.name, rating: new_loser_rating})
     res.status(200).json({
-      text: `Got it, ${winner.replace(/_{1,}/gi, ' ')} won ${loser.replace(/_{1,}/gi, ' ')} 🏆 \n _ps. notify luffis if you made a mistake_`
+      text: `Got it, ${winner.name.replace(/_{1,}/gi, ' ')} won ${loser.name.replace(/_{1,}/gi, ' ')} 🏆 \n _ps. notify luffis if you made a mistake_`
     })
   } catch (error) {
     console.error('[ERROR]', error)
@@ -136,14 +139,13 @@ app.post('/api/whoisit', async (req, res) => {
     res.json({ players })
 })
 
+app.get('/api/foobar', async(req, res) => {
+  res.json(await getMigrations())
+})
+
 
 app.get('*', (_, res) => {
   res.sendFile(path.resolve(__dirname + '/../client/index.html'))
 })
 
-
-
-
-server.listen(PORT, () => {
-  console.log(`Server listening port -> ${PORT}`)
-})
+export default app
