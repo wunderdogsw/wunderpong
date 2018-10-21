@@ -73,6 +73,17 @@ export const getMigrations = async () => {
   return res[1].rows
 }
 
+export const getLadder = async () => {
+  const client = await pool.connect()
+  const res = await client.query(`
+    SELECT "name", "rating"
+    FROM players
+    ORDER BY "rating" DESC
+  `)
+  await client.release()
+  return res.rows
+}
+
 export const runMigrationScript = async (fileName) => {
   const sql = fs.readFileSync(path.join(__dirname, '../db/sql', fileName), 'utf8')
   const client = await pool.connect()

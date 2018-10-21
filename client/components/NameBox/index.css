@@ -1,14 +1,26 @@
 .NameBox {
   position: relative;
   display: flex;
+  flex-direction: column;
   box-sizing: border-box;
-  padding-left: 10px;
   justify-content: center;
   align-items: center;
   font-size: 20px;
   text-transform: uppercase;
   background-color: #fffef7;
   color: #236791;
+}
+
+.NameBox > span {
+  padding: 3px 0px;
+}
+
+.NameBox__rating-container {
+  background-color: #7ed4e8;
+  width:  100%;
+  text-align: center;
+  border-radius: 0px 0px 5px 5px;
+  font-size: 16px;
 }
 
 .NameBox.ShadowBox {
@@ -18,7 +30,7 @@
 .NameBox > .NumberBox {
   position: absolute;
   top: -10px;
-  left: -10px;
+  left: -12px;
 }
 
 
@@ -72,4 +84,16 @@
   background-color: #fffef7;
   opacity: 0.3;
   border-radius: 12px;
+}
+
+.NameBox--king .NameBox__name-container::before, .NameBox--king .NameBox__name-container::after {
+  content: ' \2605 ';
+  margin: 0px 10px;
+  font-size: 30px;
+  vertical-align: top;
+}
+
+.NameBox--king > span.NameBox__rating-container {
+  color: #236791;
+  background: #fff;
 }

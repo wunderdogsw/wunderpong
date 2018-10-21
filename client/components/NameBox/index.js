@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import NumberBox from 'Client/components/NumberBox'
 import ShadowBox from 'Client/components/ShadowBox'
 
-export default ({ children, number, topThree, king }) => (
+export default ({ player, number, topThree, king }) => (
   <ShadowBox className={classNames(
     'NameBox',
     topThree && 'NameBox--topThree',
@@ -15,6 +15,7 @@ export default ({ children, number, topThree, king }) => (
         { `${number} ` }
       </NumberBox>
     )}
-    { children }
+    <span className="NameBox__name-container">{ player.name }</span>
+    <span className="NameBox__rating-container">{ player.rating }</span>
   </ShadowBox>
 )
