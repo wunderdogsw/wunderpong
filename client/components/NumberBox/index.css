@@ -2,8 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 40px;
-  min-height: 40px;
+  min-width: 35px;
+  min-height: 35px;
   background-color: #7ed4e8;
   color: #fff;
 }

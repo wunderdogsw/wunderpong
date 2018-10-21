@@ -9,9 +9,9 @@ import {
   getMatches,
   getPlayer,
   getMigrations,
+  getLadder,
 } from 'Server/api'
 import {
-  resolveLadderFromMatches,
   whoIsIt,
   saveImage,
   removeImage,
@@ -78,32 +78,29 @@ app.get('/api/matches', async (req, res) => {
 
 app.post('/api/ladder', async (req, res) => {
   console.info('POST /api/ladder')
-  let matches
+  let ladder
   try {
-    matches = await getMatches()
+    ladder = await getLadder()
   } catch (error) {
     console.error('[ERROR]', error)
     return res.sendStatus(500)
   }
-  const ladder = resolveLadderFromMatches(matches)
   res.status(200).json({
     text: '>>> \n' + ladder
-      .map((name, i) => `${i+1}. ${name}${i === 0 ? ' 👑' : ''}`)
+      .map((player, i) => `${i+1}. ${player.name}${i === 0 ? ' 👑' : ''}`)
       .join('\n')
   })
 })
 
 app.get('/api/ladder', async (req, res) => {
   console.info('GET /api/ladder')
-  let matches
   try {
-    matches = await getMatches()
+    const ladder = await getLadder()
+    res.status(200).json(ladder)
   } catch (error) {
     console.error('[ERROR]', error)
     return res.sendStatus(500)
   }
-  const ladder = resolveLadderFromMatches(matches)
-  res.status(200).json(ladder)
 })
 
 app.get('/api/players', async (req, res) => {

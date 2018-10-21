@@ -23,10 +23,10 @@ export default class extends Component {
 
   getLadder = async () => {
     let ladder = await getLadder()
-    ladder.map(x => x.replace(/_/gi, ' '))
+    ladder.map(player => player.name.replace(/_/gi, ' '))
     this.setState({ ladder })
     this.ladderTimeout = setTimeout(this.getLadder, 10000)
-  }
+  }  
 
   render() {
     const { ladder } = this.state
@@ -43,7 +43,7 @@ export default class extends Component {
               <NameBox
                 number="1."
                 king
-                children={ first }
+                player={ first }
                 key={ first }
               />
             </li>
@@ -51,7 +51,7 @@ export default class extends Component {
               <NameBox
                 number="2."
                 topThree
-                children={ second }
+                player={ second }
                 key={ second }
               />
             </li>
@@ -59,7 +59,7 @@ export default class extends Component {
               <NameBox
                 number="3."
                 topThree
-                children={ third }
+                player={ third }
                 key={ third }
               />
             </li>
@@ -69,7 +69,7 @@ export default class extends Component {
               <li key={ i + name }>
                 <NameBox
                   number={ `${i + 4}.` }
-                  children={ name }
+                  player={ name }
                 />
               </li>
             ))}
