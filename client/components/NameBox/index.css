@@ -78,20 +78,20 @@
   content: ' ';
   position: absolute;
   top: 4px;
-  left: 4px;
-  right: 4px;
+  left: 8px;
+  right: 8px;
   height: 12px;
   background-color: #fffef7;
   opacity: 0.3;
   border-radius: 12px;
 }
 
-.NameBox--king .NameBox__name-container::before, .NameBox--king .NameBox__name-container::after {
+/* .NameBox--king .NameBox__name-container::before, .NameBox--king .NameBox__name-container::after {
   content: ' \2605 ';
   margin: 0px 10px;
   font-size: 30px;
   vertical-align: top;
-}
+} */
 
 .NameBox--king > span.NameBox__rating-container {
   color: #236791;

@@ -338,6 +338,10 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
+arpad@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/arpad/-/arpad-1.0.2.tgz#be940619ec16560fe8748b8f98fc3d48653c59e3"
+
 arr-diff@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/arr-diff/-/arr-diff-2.0.0.tgz#8f3b827f955a8bd669697e4a4256ac3ceae356cf"
@@ -2272,10 +2276,6 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
-dlib-build@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/dlib-build/-/dlib-build-0.1.1.tgz#d60fdd91a3f0450b2a11586c7b1dac94065d1727"
-
 dom-serializer@0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-0.1.0.tgz#073c697546ce0780ce23be4a28e293e40bc30c82"
@@ -2643,19 +2643,6 @@ extsprintf@1.3.0:
 extsprintf@^1.2.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
-
-face-recognition-models@0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/face-recognition-models/-/face-recognition-models-0.0.0.tgz#9eb3068356a7db9504bee5cbe5b25b7bffe03582"
-
-face-recognition@^0.9.3:
-  version "0.9.3"
-  resolved "https://registry.yarnpkg.com/face-recognition/-/face-recognition-0.9.3.tgz#2e188c1e984477da262c80d29ccdd358fe4bb8f1"
-  dependencies:
-    dlib-build "^0.1.1"
-    face-recognition-models "0.0.0"
-    nan "^2.7.0"
-    native-node-utils "0.0.4"
 
 falafel@^2.1.0:
   version "2.1.0"
@@ -4580,10 +4567,6 @@ nan@^2.0.7, nan@^2.9.2:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.11.0.tgz#574e360e4d954ab16966ec102c0c049fd961a099"
 
-nan@^2.7.0, nan@^2.8.0:
-  version "2.11.1"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.11.1.tgz#90e22bccb8ca57ea4cd37cc83d3819b52eea6766"
-
 nanomatch@^1.2.9:
   version "1.2.13"
   resolved "https://registry.yarnpkg.com/nanomatch/-/nanomatch-1.2.13.tgz#b87a8aa4fc0de8fe6be88895b38983ff265bd119"
@@ -4599,12 +4582,6 @@ nanomatch@^1.2.9:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
-
-native-node-utils@0.0.4:
-  version "0.0.4"
-  resolved "http://registry.npmjs.org/native-node-utils/-/native-node-utils-0.0.4.tgz#9b739e589da441f9b4716de1054c3d53a0894198"
-  dependencies:
-    nan "^2.8.0"
 
 natural-compare@^1.4.0:
   version "1.4.0"
