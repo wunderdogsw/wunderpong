@@ -60,7 +60,7 @@ app.post('/api/match', async (req, res) => {
   try {
     await postMatch({name: winner.name, rating: new_winner_rating}, {name: loser.name, rating: new_loser_rating})
     res.status(200).json({
-      text: `Got it, ${winner.name.replace(/_{1,}/gi, ' ')} won ${loser.name.replace(/_{1,}/gi, ' ')} 🏆 \n _ps. notify luffis if you made a mistake_`
+      text: `Got it, ${winner.name.replace(/_{1,}/gi, ' ')} won ${loser.name.replace(/_{1,}/gi, ' ')} 🏆 \n _ps. if you made a mistake, DON'T make mistakes!_`
     })
   } catch (error) {
     console.error('[ERROR]', error)
