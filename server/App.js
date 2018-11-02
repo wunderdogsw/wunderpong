@@ -12,10 +12,7 @@ import {
   getLadder,
 } from 'Server/api'
 import {
-
-  // Uncomment to enable face recognition
-  // whoIsIt,
-  
+  whoIsIt,
   saveImage,
   removeImage,
 } from 'Server/utils'
@@ -122,9 +119,6 @@ app.get('/api/players', async (req, res) => {
 app.post('/api/whoisit', async (req, res) => {
     console.log('POST /api/whoisit')
 
-    // Uncomment following to enable face recognition
-    // Requires "face-recognition": "^0.9.3" in package.json
-    /*
     const { image } = req.body
     if (!image) return res.sendStatus(400)
 
@@ -140,10 +134,6 @@ app.post('/api/whoisit', async (req, res) => {
 
     removeImage(imagePath)
     res.json({ players })
-    */
-
-    // Remove next line if using face recognition
-    res.json({ players: [] })
 })
 
 app.get('/api/foobar', async(req, res) => {
