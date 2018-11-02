@@ -15,7 +15,7 @@ import {
 
   // Uncomment to enable face recognition
   // whoIsIt,
-  
+
   saveImage,
   removeImage,
 } from 'Server/utils'
@@ -152,7 +152,7 @@ app.get('/api/foobar', async(req, res) => {
 
 
 app.get('*', (_, res) => {
-  res.sendFile(path.resolve(__dirname + '/../client/index.html'))
+  res.sendFile(path.resolve(__dirname + '/../dist/client/index.html'))
 })
 
 export default app
