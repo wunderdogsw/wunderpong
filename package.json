@@ -34,7 +34,6 @@
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "deploy-heroku": "^0.0.0",
@@ -69,6 +68,7 @@
   },
   "dependencies": {
     "arpad": "^1.0.2",
+    "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",
     "camelcase-keys": "^4.2.0",
     "classnames": "^2.2.6",
