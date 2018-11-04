@@ -146,11 +146,6 @@ app.post('/api/whoisit', async (req, res) => {
     res.json({ players: [] })
 })
 
-app.get('/api/foobar', async(req, res) => {
-  res.json(await getMigrations())
-})
-
-
 app.get('*', (_, res) => {
   res.sendFile(path.resolve(__dirname + '/../dist/client/index.html'))
 })
