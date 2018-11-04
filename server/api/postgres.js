@@ -1,21 +1,16 @@
-import { Pool } from 'pg'
 import dotenv from 'dotenv'
 import camelcaseKeys from 'camelcase-keys'
 import path from 'path'
 import fs from 'fs'
+import db from '../db/db'
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.load()
 }
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production',
-})
-
 // get player from db or create new if it does not exist
 export const getPlayer = async (name) => {
-  const client = await pool.connect()
+  const client = await db.pool.connect()
   const res = await client.query({
     name: 'get-player',
     text: `
@@ -34,7 +29,7 @@ export const getPlayer = async (name) => {
 }
 
 export const postMatch = async (winner, loser) => {
-  const client = await pool.connect()
+  const client = await db.pool.connect()
   const query = {
     name: 'add-match',
     text: `
@@ -50,7 +45,7 @@ export const postMatch = async (winner, loser) => {
 }
 
 export const getMatches = async () => {
-  const client = await pool.connect()
+  const client = await db.pool.connect()
   const res = await client.query(`
     SELECT *
     FROM matches
@@ -61,7 +56,7 @@ export const getMatches = async () => {
 }
 
 export const getMigrations = async () => {
-  const client = await pool.connect()
+  const client = await db.pool.connect()
   const res = await client.query(`
     CREATE TABLE IF NOT EXISTS migrations (
       name VARCHAR NOT NULL UNIQUE PRIMARY KEY,
@@ -74,7 +69,7 @@ export const getMigrations = async () => {
 }
 
 export const getLadder = async () => {
-  const client = await pool.connect()
+  const client = await db.pool.connect()
   const res = await client.query(`
     SELECT "name", "rating"
     FROM players
@@ -86,7 +81,7 @@ export const getLadder = async () => {
 
 export const runMigrationScript = async (fileName) => {
   const sql = fs.readFileSync(path.join(__dirname, '../db/sql', fileName), 'utf8')
-  const client = await pool.connect()
+  const client = await db.pool.connect()
   await client.query(sql)
   await client.release()
 }
