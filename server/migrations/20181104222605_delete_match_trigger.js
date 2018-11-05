@@ -1,29 +1,33 @@
 /* eslint-disable no-unused-vars */
 
 const CREATE_TRIGGER_ROLLBACK_RATING = `
-    CREATE FUNCTION rollback_rating() RETURNS trigger AS 
+
+    CREATE OR REPLACE FUNCTION get_previous_rating(_param varchar(255)) RETURNS integer AS
+    $BODY$
+        DECLARE previous_rating integer;
+        BEGIN
+            WITH previous_match AS (
+                (SELECT winner_rating AS rating, id FROM matches WHERE winner = _param)
+                UNION ALL
+                (SELECT loser_rating AS rating, id FROM matches WHERE loser = _param)
+                ORDER BY id DESC
+                LIMIT 1
+            )
+            SELECT rating into previous_rating FROM previous_match;
+            RETURN COALESCE(previous_rating, 1500);
+        END;
+    $BODY$
+    LANGUAGE plpgsql;
+
+    CREATE OR REPLACE FUNCTION rollback_rating() RETURNS trigger AS 
     $BODY$
         BEGIN
             UPDATE players
-            SET rating=tmp.rating
-            FROM (
-                (SELECT winner_rating AS rating, created_at FROM matches WHERE winner LIKE OLD.winner)
-                UNION ALL
-                (SELECT loser_rating AS rating, created_at FROM matches WHERE loser LIKE OLD.winner)
-                ORDER BY created_at DESC
-                LIMIT 1
-            ) as tmp
+            SET rating = ( SELECT get_previous_rating(OLD.winner) )
             WHERE name LIKE OLD.winner;
 
             UPDATE players
-            SET rating=tmp2.rating
-            FROM (
-                (SELECT winner_rating AS rating, created_at FROM matches WHERE winner LIKE OLD.loser)
-                UNION ALL
-                (SELECT loser_rating AS rating, created_at FROM matches WHERE loser LIKE OLD.loser)
-                ORDER BY created_at DESC
-                LIMIT 1
-            ) as tmp2
+            SET rating = ( SELECT get_previous_rating(OLD.loser) )
             WHERE name LIKE OLD.loser;
 
             RETURN OLD;

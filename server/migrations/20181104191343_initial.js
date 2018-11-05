@@ -22,17 +22,20 @@ const DROP_TRIGGER_PLAYER_RATING = `
 `
 
 exports.up = function (knex, Promise) {
-    return knex.schema
-        .hasTable('players', (exists) => {
-            if (exists) {
+    const createPlayersTable = () => knex.schema
+        .hasTable('players').then((exists) => {
+            if (!exists) {
                 return knex.schema.createTable('players', (table) => {
                     table.string('name').notNullable().primary()
                     table.integer('rating').notNullable().defaultTo(1500)
                 })
+            } else {
+                return Promise.resolve()
             }
         })
-        .hasTable('matches', (exists) => {
-            if (exists) {
+    const createMatchesTable = () => knex.schema
+        .hasTable('matches').then((exists) => {
+            if (!exists) {
                 return knex.schema.createTable('matches', (table) => {
                     // fields
                     table.increments('id').primary()
@@ -46,8 +49,11 @@ exports.up = function (knex, Promise) {
                     table.foreign('winner', 'fk_winner').references('name').inTable('players').onUpdate('cascade').onDelete('restrict')
                     table.foreign('loser', 'fk_loser').references('name').inTable('players').onUpdate('cascade').onDelete('restrict')
                 }).raw(CREATE_TRIGGER_PLAYER_RATING)
+            } else {
+                return Promise.resolve()
             }
         })
+    return createPlayersTable().then(createMatchesTable)
 }
 
 exports.down = function (knex, Promise) {

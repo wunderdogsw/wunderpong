@@ -1,7 +1,7 @@
 import { knex, runMigrations } from './server/db'
 
 beforeAll(async () => {
-    // await runMigrations()
+    await runMigrations()
 })
 
 afterAll(async () => {

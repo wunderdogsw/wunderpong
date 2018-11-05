@@ -13,5 +13,6 @@ export const getLadder = async () => {
     return knex
         .select('name', 'rating')
         .from('players')
-        .orderBy('rating', 'desc', 'name', 'asc')
+        .orderBy('rating', 'desc')
+        .orderBy('name', 'asc')
 }

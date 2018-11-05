@@ -6,16 +6,13 @@ import uniq from 'lodash.uniq'
 import flatten from 'lodash.flatten'
 import { getPlayer, getLadder } from './db/players'
 import { postMatch, getMatches, deleteMatch } from './db/matches'
-import {
-
-  // Uncomment to enable face recognition
-  // whoIsIt,
-
-  // eslint-disable-next-line no-unused-vars
-  saveImage,
-  // eslint-disable-next-line no-unused-vars
-  removeImage,
-} from 'Server/utils'
+import { asyncHandler } from './utils'
+// Uncomment to enable face recognition
+// import {
+//   whoIsIt,
+//   saveImage,
+//   removeImage,
+// } from 'Server/utils'
 import Elo from 'arpad'
 const elo = new Elo()
 
@@ -65,16 +62,16 @@ app.post('/api/match', async (req, res) => {
   }
 })
 
-app.post('/api/match/undo', async (req, res) => {
+app.post('/api/match/undo', asyncHandler(async (req, res) => {
   const { text } = req.body
   const player = await getPlayer(text.trim().replace(/[^a-z_]/gi, ''))
   await deleteMatch(player.name)
   res.status(200).json({
     text: 'Your latest match result has been cancelled. You can now submit the corrected result.'
   })
-})
+}))
 
-app.get('/api/matches', async (req, res) => {
+app.get('/api/matches', asyncHandler(async (req, res) => {
   console.info('GET /api/matches')
   try {
     const matches = await getMatches()
@@ -83,9 +80,9 @@ app.get('/api/matches', async (req, res) => {
     console.error('[ERROR]', error)
     res.sendStatus(500)
   }
-})
+}))
 
-app.post('/api/ladder', async (req, res) => {
+app.post('/api/ladder', asyncHandler(async (req, res) => {
   console.info('POST /api/ladder')
   let ladder
   try {
@@ -99,9 +96,9 @@ app.post('/api/ladder', async (req, res) => {
       .map((player, i) => `${i + 1}. ${player.name}${i === 0 ? ' 👑' : ''}`)
       .join('\n')
   })
-})
+}))
 
-app.get('/api/ladder', async (req, res) => {
+app.get('/api/ladder', asyncHandler(async (req, res) => {
   console.info('GET /api/ladder')
   try {
     const ladder = await getLadder()
@@ -110,9 +107,9 @@ app.get('/api/ladder', async (req, res) => {
     console.error('[ERROR]', error)
     return res.sendStatus(500)
   }
-})
+}))
 
-app.get('/api/players', async (req, res) => {
+app.get('/api/players', asyncHandler(async (req, res) => {
   console.info('GET /api/players')
   let matches
   try {
@@ -123,9 +120,9 @@ app.get('/api/players', async (req, res) => {
   }
   const players = uniq(flatten(matches.map(x => [x.winner, x.loser]))).sort()
   res.status(200).json(players)
-})
+}))
 
-app.post('/api/whoisit', async (req, res) => {
+app.post('/api/whoisit', asyncHandler(async (req, res) => {
   console.log('POST /api/whoisit')
 
   // Uncomment following to enable face recognition
@@ -150,7 +147,7 @@ app.post('/api/whoisit', async (req, res) => {
 
   // Remove next line if using face recognition
   res.json({ players: [] })
-})
+}))
 
 app.get('*', (_, res) => {
   res.sendFile(path.resolve(__dirname + '/../dist/client/index.html'))
