@@ -54,6 +54,11 @@ app.post('/api/match', async (req, res) => {
 
   const winner = await getPlayer(playerNames[0])
   const loser = await getPlayer(playerNames[1])
+  
+  if (winner === loser) {
+    return res.sendStatus(400)
+  }
+  
   const new_winner_rating = elo.newRatingIfWon(winner.rating, loser.rating)
   const new_loser_rating = elo.newRatingIfLost(loser.rating, winner.rating)
 
