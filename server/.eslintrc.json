@@ -20,6 +20,12 @@
         ],
         "no-console": [
             0
+        ],
+        "no-unused-vars": [
+            "warn",
+            {
+                "ignoreRestSiblings": true
+            }
         ]
     }
 }
