@@ -11,5 +11,4 @@ CREATE TABLE matches (
 );
 
 -- Indices -------------------------------------------------------
-
-CREATE UNIQUE INDEX matches_pkey ON matches(id int4_ops);
+-- CREATE UNIQUE INDEX matches_pkey ON matches(id int4_ops);

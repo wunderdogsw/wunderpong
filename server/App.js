@@ -4,21 +4,15 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import uniq from 'lodash.uniq'
 import flatten from 'lodash.flatten'
-import {
-  postMatch,
-  getMatches,
-  getPlayer,
-  getMigrations,
-  getLadder,
-} from 'Server/api'
-import {
-
-  // Uncomment to enable face recognition
-  // whoIsIt,
-
-  saveImage,
-  removeImage,
-} from 'Server/utils'
+import { getPlayer, getLadder } from './db/players'
+import { postMatch, getMatches, deleteMatch } from './db/matches'
+import { asyncHandler } from './utils'
+// Uncomment to enable face recognition
+// import {
+//   whoIsIt,
+//   saveImage,
+//   removeImage,
+// } from 'Server/utils'
 import Elo from 'arpad'
 const elo = new Elo()
 
@@ -63,7 +57,7 @@ app.post('/api/match', async (req, res) => {
   const new_loser_rating = elo.newRatingIfLost(loser.rating, winner.rating)
 
   try {
-    await postMatch({name: winner.name, rating: new_winner_rating}, {name: loser.name, rating: new_loser_rating})
+    await postMatch({ name: winner.name, rating: new_winner_rating }, { name: loser.name, rating: new_loser_rating })
     res.status(200).json({
       text: `Got it, ${winner.name.replace(/_{1,}/gi, ' ')} won ${loser.name.replace(/_{1,}/gi, ' ')} 🏆 \n _ps. if you made a mistake, DON'T make mistakes!_`
     })
@@ -73,7 +67,16 @@ app.post('/api/match', async (req, res) => {
   }
 })
 
-app.get('/api/matches', async (req, res) => {
+app.post('/api/match/undo', asyncHandler(async (req, res) => {
+  const { text } = req.body
+  const player = await getPlayer(text.trim().replace(/[^a-z_]/gi, ''))
+  await deleteMatch(player.name)
+  res.status(200).json({
+    text: 'Your latest match result has been cancelled. You can now submit the corrected result.'
+  })
+}))
+
+app.get('/api/matches', asyncHandler(async (req, res) => {
   console.info('GET /api/matches')
   try {
     const matches = await getMatches()
@@ -82,9 +85,9 @@ app.get('/api/matches', async (req, res) => {
     console.error('[ERROR]', error)
     res.sendStatus(500)
   }
-})
+}))
 
-app.post('/api/ladder', async (req, res) => {
+app.post('/api/ladder', asyncHandler(async (req, res) => {
   console.info('POST /api/ladder')
   let ladder
   try {
@@ -95,12 +98,12 @@ app.post('/api/ladder', async (req, res) => {
   }
   res.status(200).json({
     text: '>>> \n' + ladder
-      .map((player, i) => `${i+1}. ${player.name}${i === 0 ? ' 👑' : ''}`)
+      .map((player, i) => `${i + 1}. ${player.name}${i === 0 ? ' 👑' : ''}`)
       .join('\n')
   })
-})
+}))
 
-app.get('/api/ladder', async (req, res) => {
+app.get('/api/ladder', asyncHandler(async (req, res) => {
   console.info('GET /api/ladder')
   try {
     const ladder = await getLadder()
@@ -109,9 +112,9 @@ app.get('/api/ladder', async (req, res) => {
     console.error('[ERROR]', error)
     return res.sendStatus(500)
   }
-})
+}))
 
-app.get('/api/players', async (req, res) => {
+app.get('/api/players', asyncHandler(async (req, res) => {
   console.info('GET /api/players')
   let matches
   try {
@@ -122,39 +125,34 @@ app.get('/api/players', async (req, res) => {
   }
   const players = uniq(flatten(matches.map(x => [x.winner, x.loser]))).sort()
   res.status(200).json(players)
-})
+}))
 
-app.post('/api/whoisit', async (req, res) => {
-    console.log('POST /api/whoisit')
+app.post('/api/whoisit', asyncHandler(async (req, res) => {
+  console.log('POST /api/whoisit')
 
-    // Uncomment following to enable face recognition
-    // Requires "face-recognition": "^0.9.3" in package.json
-    /*
-    const { image } = req.body
-    if (!image) return res.sendStatus(400)
+  // Uncomment following to enable face recognition
+  // Requires "face-recognition": "^0.9.3" in package.json
+  /*
+  const { image } = req.body
+  if (!image) return res.sendStatus(400)
 
-    const imagePath = await saveImage(new Buffer(image.split(',')[1], 'base64'))
+  const imagePath = await saveImage(new Buffer(image.split(',')[1], 'base64'))
 
-    let players
-    try {
-      players = whoIsIt(imagePath)
-    } catch(error) {
-      console.error('[ERROR]', error)
-      return res.sendStatus(500)
-    }
+  let players
+  try {
+    players = whoIsIt(imagePath)
+  } catch(error) {
+    console.error('[ERROR]', error)
+    return res.sendStatus(500)
+  }
 
-    removeImage(imagePath)
-    res.json({ players })
-    */
+  removeImage(imagePath)
+  res.json({ players })
+  */
 
-    // Remove next line if using face recognition
-    res.json({ players: [] })
-})
-
-app.get('/api/foobar', async(req, res) => {
-  res.json(await getMigrations())
-})
-
+  // Remove next line if using face recognition
+  res.json({ players: [] })
+}))
 
 app.get('*', (_, res) => {
   res.sendFile(path.resolve(__dirname + '/../dist/client/index.html'))
