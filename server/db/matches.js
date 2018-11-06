@@ -1,4 +1,5 @@
 import { knex } from '../db'
+const TWO_MONTHS = 60 * 24 * 60 * 60 * 1000
 
 export const postMatch = async (winner, loser) => {
     return knex('matches')
@@ -9,8 +10,7 @@ export const getMatches = async () => {
     return knex
         .select('*')
         .from('matches')
-        // FIXME: uncomment to enable decay (matches after 30 days do not count towards rating)
-        // .where('created_at', '>', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000))
+        .where('created_at', '>=', new Date(Date.now() - TWO_MONTHS))
         .orderBy('created_at', 'asc')
 }
 
