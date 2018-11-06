@@ -4,18 +4,14 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import uniq from 'lodash.uniq'
 import flatten from 'lodash.flatten'
-import { getPlayer, getLadder } from './db/players'
 import { postMatch, getMatches, deleteMatch } from './db/matches'
-import { asyncHandler } from './utils'
+import { asyncHandler, getLadder } from './utils'
 // Uncomment to enable face recognition
 // import {
 //   whoIsIt,
 //   saveImage,
 //   removeImage,
 // } from 'Server/utils'
-import Elo from 'arpad'
-const elo = new Elo()
-
 
 const app = express()
 
@@ -37,40 +33,32 @@ app.post('/api/match', async (req, res) => {
     return res.sendStatus(400)
   }
 
-  const playerNames = text
+  const players = text
     .split(' ')
     .filter(x => Boolean(x.trim()))
     .map(x => x.toLowerCase().trim().replace(/[^a-z_]/gi, ''))
 
-  if (playerNames.length !== 2) {
+  if (players.length !== 2) {
     return res.sendStatus(400)
   }
 
-  const winner = await getPlayer(playerNames[0])
-  const loser = await getPlayer(playerNames[1])
-  
+  const winner = players[0]
+  const loser = players[1]
+
   if (winner === loser) {
     return res.sendStatus(400)
   }
-  
-  const new_winner_rating = elo.newRatingIfWon(winner.rating, loser.rating)
-  const new_loser_rating = elo.newRatingIfLost(loser.rating, winner.rating)
 
-  try {
-    await postMatch({ name: winner.name, rating: new_winner_rating }, { name: loser.name, rating: new_loser_rating })
-    res.status(200).json({
-      text: `Got it, ${winner.name.replace(/_{1,}/gi, ' ')} won ${loser.name.replace(/_{1,}/gi, ' ')} 🏆 \n _ps. if you made a mistake, DON'T make mistakes!_`
-    })
-  } catch (error) {
-    console.error('[ERROR]', error)
-    res.sendStatus(500)
-  }
+  await postMatch(winner, loser)
+  res.status(200).json({
+    text: `Got it, ${winner.replace(/_{1,}/gi, ' ')} won ${loser.replace(/_{1,}/gi, ' ')} 🏆 \n _ps. if you made a mistake, DON'T make mistakes!_`
+  })
 })
 
 app.post('/api/match/undo', asyncHandler(async (req, res) => {
   const { text } = req.body
-  const player = await getPlayer(text.trim().replace(/[^a-z_]/gi, ''))
-  await deleteMatch(player.name)
+  const player = text.trim().replace(/[^a-z_]/gi, '')
+  await deleteMatch(player)
   res.status(200).json({
     text: 'Your latest match result has been cancelled. You can now submit the corrected result.'
   })
@@ -78,24 +66,14 @@ app.post('/api/match/undo', asyncHandler(async (req, res) => {
 
 app.get('/api/matches', asyncHandler(async (req, res) => {
   console.info('GET /api/matches')
-  try {
-    const matches = await getMatches()
-    res.status(200).json(matches)
-  } catch (error) {
-    console.error('[ERROR]', error)
-    res.sendStatus(500)
-  }
+  const matches = await getMatches()
+  res.status(200).json(matches)
 }))
 
 app.post('/api/ladder', asyncHandler(async (req, res) => {
   console.info('POST /api/ladder')
-  let ladder
-  try {
-    ladder = await getLadder()
-  } catch (error) {
-    console.error('[ERROR]', error)
-    return res.sendStatus(500)
-  }
+  const matches = await getMatches()
+  const ladder = getLadder(matches)
   res.status(200).json({
     text: '>>> \n' + ladder
       .map((player, i) => `${i + 1}. ${player.name}${i === 0 ? ' 👑' : ''}`)
@@ -105,24 +83,14 @@ app.post('/api/ladder', asyncHandler(async (req, res) => {
 
 app.get('/api/ladder', asyncHandler(async (req, res) => {
   console.info('GET /api/ladder')
-  try {
-    const ladder = await getLadder()
-    res.status(200).json(ladder)
-  } catch (error) {
-    console.error('[ERROR]', error)
-    return res.sendStatus(500)
-  }
+  const matches = await getMatches()
+  const ladder = getLadder(matches)
+  res.status(200).json(ladder)
 }))
 
 app.get('/api/players', asyncHandler(async (req, res) => {
   console.info('GET /api/players')
-  let matches
-  try {
-    matches = await getMatches()
-  } catch (error) {
-    console.error('[ERROR]', error)
-    return res.sendStatus(500)
-  }
+  const matches = await getMatches()
   const players = uniq(flatten(matches.map(x => [x.winner, x.loser]))).sort()
   res.status(200).json(players)
 }))
@@ -156,6 +124,12 @@ app.post('/api/whoisit', asyncHandler(async (req, res) => {
 
 app.get('*', (_, res) => {
   res.sendFile(path.resolve(__dirname + '/../dist/client/index.html'))
+})
+
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  console.error('[ERROR]', err)
+  res.sendStatus(500)
 })
 
 export default app
