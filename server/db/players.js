@@ -6,7 +6,7 @@ export const getPlayer = async (name) => {
         .from('players')
         .where({ name })
         .first()
-    return existing || (await knex.insert({ name }, ['name', 'rating']).into('players')).pop()
+    return existing || { name, rating: 1500 }
 }
 
 export const getLadder = async () => {

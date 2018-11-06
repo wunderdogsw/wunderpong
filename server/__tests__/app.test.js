@@ -7,11 +7,6 @@ import { getMatches } from '../db/matches'
 describe('app routes', () => {
 
     beforeEach(async () => {
-        await knex('players').insert([
-            { name: 'mickey' },
-            { name: 'donald' },
-            { name: 'goofy' },
-        ])
         await knex('matches').insert([
             { winner: 'mickey', winner_rating: 1500, loser: 'goofy', loser_rating: 1500 },
             { winner: 'mickey', winner_rating: 1516, loser: 'donald', loser_rating: 1484 }
@@ -20,7 +15,6 @@ describe('app routes', () => {
 
     afterEach(async () => {
         await knex('matches').del().whereNotNull('id')
-        await knex('players').del().whereNotNull('name')
     })
 
     describe('GET /api/matches', () => {
@@ -151,7 +145,6 @@ describe('app routes', () => {
 
             it('adjusts rating in players table as if the match never happened', async () => {
                 expect(await getLadder()).toEqual([
-                    { name: 'donald', rating: 1500 },
                     { name: 'goofy', rating: 1500 },
                     { name: 'mickey', rating: 1500 }
                 ])
