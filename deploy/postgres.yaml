@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: wunderpong-postgres-pv-volume
+  labels:
+    type: amazonEBS
+    app: wunderpong-postgres
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  awsElasticBlockStore:
+    volumeID: vol-0f99ba7e7d758cf03
+    fsType: ext4
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wunderpong-postgres-pv-claim
+  labels:
+    app: wunderpong-postgres
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: wunderpong-postgres
+spec:
+  template:
+    metadata:
+      labels:
+        app: wunderpong-postgres
+    spec:
+      containers:
+        - name: wunderpong-postgres
+          image: postgres:10.4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: wunderpong-database-config
+                  key: dbname
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: wunderpong-database-config
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: wunderpong-database-config
+                  key: password
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: wunderpong-postgresdb
+              subPath: postgres-data
+      volumes:
+        - name: wunderpong-postgresdb
+          persistentVolumeClaim:
+            claimName: wunderpong-postgres-pv-claim
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: wunderpong-postgres
+  labels:
+    app: wunderpong-postgres
+spec:
+  ports:
+   - port: 5432
+  selector:
+    app: wunderpong-postgres
