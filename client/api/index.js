@@ -6,7 +6,7 @@ import {
 
 
 const API_URL = process.env.NODE_ENV === 'production' ?
-  process.env.PRODUCTION_API_URL :
+  (process.env.PRODUCTION_API_URL || '/api') :
   'http://localhost:3000/api'
 
 
