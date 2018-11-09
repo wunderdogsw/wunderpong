@@ -10,8 +10,7 @@ import Ladder from 'Client/components/Ladder'
 import NewMatch from 'Client/components/NewMatch'
 import Qr from 'Client/components/Qr'
 
-// Uncomment to enable face recognition
-// import PlayerCamera from 'Client/components/PlayerCamera'
+import PlayerCamera from 'Client/components/PlayerCamera'
 
 const App = () => (
   <BrowserRouter>
@@ -29,10 +28,7 @@ const App = () => (
               <Ladder />
             </ContentBox>
             <Qr value={ `${window.location}match`} />
-
-            {/* Uncomment to enable face recognition */}
-            {/* <PlayerCamera /> */}
-
+            <PlayerCamera />
           </Fragment>
         )}
       />

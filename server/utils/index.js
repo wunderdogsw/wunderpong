@@ -1,5 +1,4 @@
-// Uncomment to enable face recognition
-// export * from './face-recognitor'
+export * from './face-recognitor'
 import Elo from 'arpad'
 
 export * from './image-utils'

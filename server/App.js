@@ -6,12 +6,11 @@ import uniq from 'lodash.uniq'
 import flatten from 'lodash.flatten'
 import { postMatch, getMatches, deleteMatch } from './db/matches'
 import { asyncHandler, getLadder } from './utils'
-// Uncomment to enable face recognition
-// import {
-//   whoIsIt,
-//   saveImage,
-//   removeImage,
-// } from 'Server/utils'
+import {
+  whoIsIt,
+  saveImage,
+  removeImage,
+} from 'Server/utils'
 
 const app = express()
 
@@ -98,28 +97,15 @@ app.get('/api/players', asyncHandler(async (req, res) => {
 app.post('/api/whoisit', asyncHandler(async (req, res) => {
   console.log('POST /api/whoisit')
 
-  // Uncomment following to enable face recognition
-  // Requires "face-recognition": "^0.9.3" in package.json
-  /*
   const { image } = req.body
   if (!image) return res.sendStatus(400)
 
   const imagePath = await saveImage(new Buffer(image.split(',')[1], 'base64'))
 
-  let players
-  try {
-    players = whoIsIt(imagePath)
-  } catch(error) {
-    console.error('[ERROR]', error)
-    return res.sendStatus(500)
-  }
+  const players = whoIsIt(imagePath)
 
   removeImage(imagePath)
   res.json({ players })
-  */
-
-  // Remove next line if using face recognition
-  res.json({ players: [] })
 }))
 
 app.get('*', (_, res) => {
