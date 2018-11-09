@@ -12,7 +12,7 @@ spec:
   accessModes:
     - ReadWriteMany
   awsElasticBlockStore:
-    volumeID: vol-0f99ba7e7d758cf03
+    volumeID: vol-00bafc87b858104e1
     fsType: ext4
 
 ---

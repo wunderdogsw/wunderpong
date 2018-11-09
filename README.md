@@ -18,7 +18,7 @@ Then:
 If you need to change the deployment configuration, apply changes with `kubectl apply -f deploy/wunderpong.yaml`.
 
 ### url
-[wunderpong.cloud.wunder.dog](https://wunderpong.cloud.wunder.dog/)
+[wunderpong.lab.wunder.dog](https://wunderpong.lab.wunder.dog/)
 
 ### slack commands
 
@@ -34,5 +34,5 @@ If you need to change the deployment configuration, apply changes with `kubectl 
 ### .env
 ```
 DATABASE_URL=<postgres url>
-PRODUCTION_API_URL=https://wunderpong.herokuapp.com/api
+PRODUCTION_API_URL=https://wunderpong.lab.wunder.dog/api
 ```

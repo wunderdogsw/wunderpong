@@ -61,7 +61,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - host: wunderpong.cloud.wunder.dog
+  - host: wunderpong.lab.wunder.dog
     http:
       paths:
       - backend:
