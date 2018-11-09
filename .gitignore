@@ -13,3 +13,4 @@ __dev__
 newrelic_agent.log
 .yarn-error.log
 uploads
+dist
