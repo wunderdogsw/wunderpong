@@ -3,12 +3,16 @@ import supertest from 'supertest'
 import { knex } from '../db'
 import { getMatches } from '../db/matches'
 
+const now = Date.now()
+
+const daysAgo = (days) => new Date(now - days * 24 * 60 * 60 * 1000)
+
 describe('app routes', () => {
 
     beforeEach(async () => {
         await knex('matches').insert([
-            { winner: 'mickey', loser: 'goofy' },
-            { winner: 'mickey', loser: 'donald' }
+            { winner: 'mickey', loser: 'goofy', created_at: daysAgo(2) },
+            { winner: 'mickey', loser: 'donald', created_at: daysAgo(1) }
         ])
     })
 
@@ -72,7 +76,7 @@ describe('app routes', () => {
         it('returns http 200 with correct text', async () => {
             expect(response.status).toBe(200)
             expect(response.text).toEqual(
-                '{"text":"Got it, scrooge won donald 🏆 \\n _ps. if you made a mistake, DON\'T make mistakes!_"}')
+                '{"text":"Got it, scrooge won donald 🏆 \\n _ps. if you made a mistake, use /pingpongundo [nick] to cancel the result and try again._"}')
         })
 
         it('returns http 400 if player tries to add match against himself / herself', async () => {

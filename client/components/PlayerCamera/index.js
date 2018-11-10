@@ -5,8 +5,8 @@ import Webcam from "react-webcam"
 import { postScreenshot, postMatch } from 'Client/api'
 import ContentBox from 'Client/components/ContentBox'
 
-const SCREENSHOT_INTERVAL = 1000
-const CONFIRM_TIME = 6000
+const SCREENSHOT_INTERVAL = 3000
+const CONFIRM_TIME = 11000
 
 export default class PlayerCamera extends Component {
 
