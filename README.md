@@ -35,4 +35,5 @@ If you need to change the deployment configuration, apply changes with `kubectl 
 ```
 DATABASE_URL=<postgres url>
 PRODUCTION_API_URL=https://wunderpong.lab.wunder.dog/api
+SLACK_WEBHOOK_URL=<slack webhook url>
 ```

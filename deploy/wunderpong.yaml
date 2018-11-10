@@ -36,6 +36,11 @@ spec:
               secretKeyRef:
                 name: wunderpong-database-config
                 key: password
+          - name: SLACK_WEBHOOK_URL
+            valueFrom:
+              secretKeyRef:
+                name: 'wunderpong-slack'
+                key: webhook
 
 ---
 
