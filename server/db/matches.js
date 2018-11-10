@@ -1,16 +1,18 @@
 import { knex } from '../db'
-const MONTH = 30 * 24 * 60 * 60 * 1000
+import * as config from '../config'
 
 export const postMatch = async (winner, loser) => {
     return knex('matches')
         .insert({ winner: winner, loser: loser })
 }
 
-export const getMatches = async () => {
+export const getMatches = async (from, to) => {
+    const start = from || new Date(Date.now() - config.ratingDecayTimeMilliseconds)
+    const end = to || knex.fn.now()
     return knex
         .select('*')
         .from('matches')
-        .where('created_at', '>=', new Date(Date.now() - MONTH))
+        .whereBetween('created_at', [start, end])
         .orderBy('created_at', 'asc')
 }
 

@@ -19,3 +19,31 @@ export const getLadder = (matches) => {
         .map(name => ({ name, rating: ladder[name] }))
         .sort((a, b) => b.rating - a.rating)
 }
+
+export const getMostActivePlayer = (matches) => {
+    const matchesPlayed = {}
+    for (const match of matches) {
+        if (!matchesPlayed[match.winner]) {
+            matchesPlayed[match.winner] = 0
+        }
+        if (!matchesPlayed[match.loser]) {
+            matchesPlayed[match.loser] = 0
+        }
+        matchesPlayed[match.winner]++
+        matchesPlayed[match.loser]++
+    }
+    return Object.keys(matchesPlayed)
+        .map(name => ({ name, matches: matchesPlayed[name] }))
+        .sort((a, b) => a.matches - b.matches)
+        .pop()
+}
+
+export const getRatingDifferences = (ladderNew, ladderOld) => {
+    return ladderNew.map(({ name, rating }) => {
+        const old = ladderOld.find(old => old.name === name) || { name, rating: 1500 }
+        return {
+            name,
+            rating: rating - old.rating
+        }
+    }).sort((a, b) => b.rating - a.rating)
+}
