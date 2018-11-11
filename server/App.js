@@ -5,8 +5,10 @@ import bodyParser from 'body-parser'
 import uniq from 'lodash.uniq'
 import flatten from 'lodash.flatten'
 import { postMatch, getMatches, deleteMatch } from './db/matches'
-import { asyncHandler, getLadder, getRatingDifferences, getMostActivePlayer } from './utils'
+import { asyncHandler, getLadder } from './utils'
+import cron from 'node-cron'
 import * as config from './config'
+import { postWeeklyStatisticsToSlack } from './scheduled/weekly-statistics'
 // Uncomment to enable face recognition
 // import {
 //   whoIsIt,
@@ -21,7 +23,16 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('dist/client'))
 
-
+if (config.slackWebhookURL) {
+  console.log('Scheduling to post weekly statistics at 08:00 every monday.')
+  cron.schedule('0 8 * * Monday', async () => {
+    try {
+      await postWeeklyStatisticsToSlack(config.slackWebhookURL)
+    } catch (err) {
+      console.error(err)
+    }
+  }, { timezone: 'Europe/Helsinki' })
+}
 
 app.post('/api/match', async (req, res) => {
   console.info('POST /api/match')
@@ -94,41 +105,6 @@ app.get('/api/players', asyncHandler(async (req, res) => {
   const matches = await getMatches()
   const players = uniq(flatten(matches.map(x => [x.winner, x.loser]))).sort()
   res.status(200).json(players)
-}))
-
-app.post('/api/weekly-stats', asyncHandler(async (req, res) => {
-  const now = Date.now()
-
-  //get latest data
-  const matches = await getMatches()
-  const ladderNow = getLadder(matches)
-
-  //get data before this week
-  const oneWeek = 7 * 24 * 60 * 60 * 1000
-  const from = new Date(now - config.ratingDecayTimeMilliseconds - oneWeek)
-  const to = new Date(now - oneWeek)
-  const matchesBeforeLastWeek = await getMatches(from, to)
-  const ladderBeforeLastWeek = getLadder(matchesBeforeLastWeek)
-
-  //get statistics & post to slack
-  const matchesLastWeek = await getMatches(new Date(now - oneWeek))
-  const mostActivePlayer = getMostActivePlayer(matchesLastWeek)
-  const ratingDiffs = getRatingDifferences(ladderNow, ladderBeforeLastWeek)
-  const biggestRatingGain = ratingDiffs[0]
-  const biggestRatingLoss = ratingDiffs.pop()
-  
-  const messages = [
-    ':pingis::pingis: weekly *SMASHDOWN* statistics :pingis::pingis:',
-    `• *${matches.length}* matches were played last week!`,
-    `• The most active player was *${mostActivePlayer.name}* with ${mostActivePlayer.matches} games played`,
-    `• :lion_face: of the week was *${biggestRatingGain.name}* with a net rating gain of *${biggestRatingGain.rating}* points`,
-    `• :sheep: of the week was *${biggestRatingLoss.name}* with a net rating loss of *${biggestRatingLoss.rating}* points`
-  ]
-  if (ladderBeforeLastWeek.length === 0 || ladderNow[0].name !== ladderBeforeLastWeek[0].name) {
-    const from = ladderBeforeLastWeek[0] ? ` from ${ladderBeforeLastWeek[0].name} ` : ' '
-    messages.push(`• We have a new scoreboard leader! *${ladderNow[0].name}* has taken :crown:${from}with *${ladderNow[0].rating}* points`)
-  }
-  return res.status(200).json({ text: messages.filter(msg => !!msg).join('\n') })
 }))
 
 app.post('/api/whoisit', asyncHandler(async (req, res) => {
