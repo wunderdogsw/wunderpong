@@ -25,7 +25,7 @@ app.use(express.static('dist/client'))
 
 if (config.slackWebhookURL) {
   console.log('Scheduling to post weekly statistics at 08:00 every monday.')
-  cron.schedule('0 8 * * Monday', async () => {
+  cron.schedule('0 8 * * Friday', async () => {
     try {
       await postWeeklyStatisticsToSlack(config.slackWebhookURL)
     } catch (err) {
