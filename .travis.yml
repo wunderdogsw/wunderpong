@@ -1,0 +1,10 @@
+sudo: required
+language: generic
+env:
+  global:
+  - COMMIT=${TRAVIS_COMMIT::6}
+  - DOCKER_REPO=766261213300.dkr.ecr.eu-west-1.amazonaws.com/wunderpong
+services:
+- docker
+script:
+- docker build . -t $DOCKER_REPO:$COMMIT
