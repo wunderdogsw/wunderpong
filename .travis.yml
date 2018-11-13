@@ -4,7 +4,16 @@ env:
   global:
   - COMMIT=${TRAVIS_COMMIT::6}
   - DOCKER_REPO=766261213300.dkr.ecr.eu-west-1.amazonaws.com/wunderpong
+  - secure: OyX/3R/4c3F0HjXg0BqRdRm0dEQrD0GyXg1yx1TQ0FGc+7rfJXnEXDMbdIGRsLG/xlXtmRg+3W5g/+uWuR2Any4BQwjgCZGcu9RCzctHGIcVG8bXAZbM6v7eJkqizP18l0deKueRlsLRHH/Ll0Knctg3kzM8G/TuvTat44Py0JntNYs3+5+QIQ7FY8QcnXjokexqECTgskQF2Symg+Qhq1UaRXv5XJOsfS+FfkD9gpTsWgbi68us6gWFjv5j0Nv/a1ay47cN2SkzraLJJ/88k1oWkZaY88fMuUrAgMDI0ckDXZHFDfMfF7oHTWp4IIAGIuVgaRwCGG+lnsS1G43NaNDOQHZRM4M8LCgptDcXMmmj1WsVNlD0cm1IxMZsa7TnVmqaWOsnoYEDa80Dl3LooeA8X6sA2YpbHLF+A+MIxHZtjcrITpQ/6H8DQgnC3dds3v0ocnOMp+J/v+SLFNnFtHZd4pBqNlC+qJFCPxDTuZhzlabOl686sSjwChgsGX9zA0lXxp+EbK01kU8BlvBMFZ/S/nq7yVICXdpOjUXX8HnsaLx275xVwL7O+k+uBaW6eGfv/S5/Q3NgumFyCRgOkbUcGniDzlfjUHllW9kGdS8Wpnz7LzySjTI7PooD8/raSXk0zt3+085ipeFQHb3LKHXONTolmmjtPW1m9ZNcLHU=
+  - secure: mrhmGCj2gBfsiGknxu6K3jpwqfzHSQt1qNlHst70a47DYpyIOzmWMDIRmTxTvx6fNY1pbGg0nIaicvRulusexYbznRTEOOoLJm1CAg2uEFNI4sPFGOnbPmTrALA4bvbnja6BBj5scI2ozrkemESLhP6V0nCzxMpPMir9XPdU1BgRhQya4EzreRYn53wM9yGEK7i6tWXx0D6oM2hASRhSrU/UvbiGociZwyzU/mc+K6TX7s72Kd+bIp7ohmW/pXb3fCyoBZSvShhafWZHEan4okyLRbFQc44FnHjlkoqNo1DAexSKd6EIxp1mrwlE7KFUo+yMLXAGqdjj07kd1xM6AO4q9YTKeThQO8lQZhDYSoO6no7ZqXwMGBXeKHMj6LynVp/wkefvos7u237QDB49xWjQd3ypjRH9FYKvpk1h8rr0u0/sXGETe4lYt2GWErzEg7ESeTQJ91XkSa/O/sqCYVkCViiYxPn+K7Ua7clEFBiEiisSUOuxbsR4eDaD/5T6iIaA/HAIp2RKvSzvEp03S7KahXMy7HVqcVVBS5wJXQhE+UUrdSWPo8LHB0vnVnSSjqSXzILh54CGi+b1IZhDPBGZHgIU8aIybSTiFua17obFOh0qzp9x9d42NvpqIchOT81j4JOkEbVC40rAXHrdf7XfciWpXmtEgBq5xkdb/sM=
 services:
 - docker
 script:
 - docker build . -t $DOCKER_REPO:$COMMIT
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: "./deploy.sh"
+  on:
+    repo: wunderdogsw/wunderpong
+    branch: master
