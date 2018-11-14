@@ -18,6 +18,6 @@ module.exports = {
     },
     test: {
         client: 'pg',
-        connection: 'postgresql://wunderpong:wunderpong@localhost:5432/wunderpong_test'
+        connection: 'postgresql://wunderpong:wunderpong@localhost:65432/wunderpong_test'
     }
 }

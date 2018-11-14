@@ -9,12 +9,6 @@ import { asyncHandler, getLadder } from './utils'
 import cron from 'node-cron'
 import * as config from './config'
 import { postWeeklyStatisticsToSlack } from './scheduled/weekly-statistics'
-// Uncomment to enable face recognition
-// import {
-//   whoIsIt,
-//   saveImage,
-//   removeImage,
-// } from 'Server/utils'
 
 const app = express()
 
@@ -107,35 +101,8 @@ app.get('/api/players', asyncHandler(async (req, res) => {
   res.status(200).json(players)
 }))
 
-app.post('/api/whoisit', asyncHandler(async (req, res) => {
-  console.log('POST /api/whoisit')
-
-  // Uncomment following to enable face recognition
-  // Requires "face-recognition": "^0.9.3" in package.json
-  /*
-  const { image } = req.body
-  if (!image) return res.sendStatus(400)
-
-  const imagePath = await saveImage(new Buffer(image.split(',')[1], 'base64'))
-
-  let players
-  try {
-    players = whoIsIt(imagePath)
-  } catch(error) {
-    console.error('[ERROR]', error)
-    return res.sendStatus(500)
-  }
-
-  removeImage(imagePath)
-  res.json({ players })
-  */
-
-  // Remove next line if using face recognition
-  res.json({ players: [] })
-}))
-
 app.get('*', (_, res) => {
-  res.sendFile(path.resolve(__dirname + '/../dist/client/index.html'))
+  res.sendFile(path.resolve('./dist/client/index.html'))
 })
 
 // eslint-disable-next-line no-unused-vars

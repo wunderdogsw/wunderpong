@@ -3,7 +3,7 @@ services:
   db:
     image: postgres:latest
     ports:
-    - '5432:5432'
+    - '65432:5432'
     environment:
       POSTGRES_USER: 'wunderpong'
       POSTGRES_PASSWORD: 'wunderpong'
