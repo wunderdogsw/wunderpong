@@ -7,6 +7,8 @@ const now = Date.now()
 
 const daysAgo = (days) => new Date(now - days * 24 * 60 * 60 * 1000)
 
+jest.mock('node-cron', () => ({ schedule: jest.fn() }))
+
 describe('app routes', () => {
 
     beforeEach(async () => {
