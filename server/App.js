@@ -15,7 +15,10 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.static('dist/client'))
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('dist/client'))
+}
 
 if (config.slackWebhookURL) {
   console.log('Scheduling to post weekly statistics at 08:00 every friday.')
@@ -35,6 +38,7 @@ app.post('/api/match', async (req, res) => {
     text,
   } = req.body
 
+
   if (!text) {
     return res.sendStatus(400)
   }
@@ -47,6 +51,7 @@ app.post('/api/match', async (req, res) => {
   if (players.length !== 2) {
     return res.sendStatus(400)
   }
+
 
   const winner = players[0]
   const loser = players[1]
