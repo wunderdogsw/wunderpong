@@ -24,10 +24,22 @@ If you need to change the deployment configuration, apply changes with `kubectl 
 
 `/pingpongmatch <winner> <loser>` -  adds new match record
 
+`/pingpongundo <playername>` -  Undos player's latest match
+
 `/pingpongladder` - displays current player ladder
 
 
-### todo
+
+### Dev setup
+
+1. Setup postgres database
+2. Add `DATABASE_URL` to `.env` file
+3. [optional] Set `DEVELOPMENT_API_URL` in `.env` if other than localhost:3000
+4. `npm i` or `yarn`
+5. `npm run dev` or `yarn dev`
+6. Go to [localhost:1234](http://localhost:1234)
+
+### Todo
 
 * nothing here
 
@@ -35,5 +47,6 @@ If you need to change the deployment configuration, apply changes with `kubectl 
 ```
 DATABASE_URL=<postgres url>
 PRODUCTION_API_URL=https://wunderpong.lab.wunder.dog/api
+DEVELOPMENT_API_URL=< optional url for api, defaults to localhost:3000>
 SLACK_WEBHOOK_URL=<slack webhook url>
 ```
