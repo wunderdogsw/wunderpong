@@ -16,6 +16,6 @@ export default ({ player, number, topThree, king }) => (
       </NumberBox>
     )}
     <span className="NameBox__name-container">{ player.name }</span>
-    <span className="NameBox__rating-container">{ player.rating }</span>
+    <span className="NameBox__rating-container">{ Math.round(player.rating) }</span>
   </ShadowBox>
 )

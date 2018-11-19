@@ -94,7 +94,7 @@ app.post('/api/ladder', asyncHandler(async (req, res) => {
 
 app.get('/api/ladder', asyncHandler(async (req, res) => {
   console.info('GET /api/ladder')
-  const matches = await getMatches()
+  const matches = await getMatches(new Date(0))
   const ladder = getLadder(matches)
   res.status(200).json(ladder)
 }))
