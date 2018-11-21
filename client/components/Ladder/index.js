@@ -26,46 +26,40 @@ export default class extends Component {
     ladder.map(player => player.name.replace(/_/gi, ' '))
     this.setState({ ladder })
     this.ladderTimeout = setTimeout(this.getLadder, 10000)
-  }  
+  }
 
   render() {
     const { ladder } = this.state
 
     if (!ladder.length) return <div className="Ladder" />
 
-    const [ first, second, third, ...rest ] = this.state.ladder
+    const [ first, second, third, ...players ] = this.state.ladder
+
+    const topThree = [first, second, third]
+      .map(x => x ? x : ({
+        name: '-',
+        rating: '-'
+      }))
 
     return (
       <div className="Ladder">
         <ol>
           <div className="Ladder__topThree">
-            <li>
-              <NameBox
-                number="1."
-                king
-                player={ first }
-                key={ first }
-              />
-            </li>
-            <li>
-              <NameBox
-                number="2."
-                topThree
-                player={ second }
-                key={ second }
-              />
-            </li>
-            <li>
-              <NameBox
-                number="3."
-                topThree
-                player={ third }
-                key={ third }
-              />
-            </li>
+
+            { topThree.map( (player, i) => (
+              <li key={ `topthree${i}${player.name}` }>
+                <NameBox
+                  number={`${i + 1}.`}
+                  king={ i === 0 }
+                  topThree={ i !== 0 }
+                  player={ player }
+                />
+              </li>
+            ))}
+
           </div>
-          <div className="Ladder__rest">
-            { rest.map((name, i) => (
+          <div className="Ladder__players">
+            { players.map((name, i) => (
               <li key={ i + name }>
                 <NameBox
                   number={ `${i + 4}.` }
