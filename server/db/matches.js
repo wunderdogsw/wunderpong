@@ -1,13 +1,23 @@
 import { knex } from '../db'
 import * as config from '../config'
+import { getOngoingSeason } from './seasons'
 
 export const postMatch = async (winner, loser) => {
     return knex('matches')
         .insert({ winner: winner, loser: loser })
 }
 
+const getStartDate = async () => {
+    const ongoingSeason = await getOngoingSeason()
+    if (ongoingSeason) {
+        return new Date(ongoingSeason.start)
+    } else {
+        return new Date(Date.now() - config.ratingDecayTimeMilliseconds)
+    }
+}
+
 export const getMatches = async (from, to) => {
-    const start = from || new Date(Date.now() - config.ratingDecayTimeMilliseconds)
+    const start = from || await getStartDate()
     const end = to || knex.fn.now()
     return knex
         .select('*')

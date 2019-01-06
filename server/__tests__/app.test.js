@@ -6,6 +6,7 @@ import { getMatches } from '../db/matches'
 const now = Date.now()
 
 const daysAgo = (days) => new Date(now - days * 24 * 60 * 60 * 1000)
+const daysInFuture = (days) => new Date(now + days * 24 * 60 * 60 * 1000)
 
 jest.mock('node-cron', () => ({ schedule: jest.fn() }))
 
@@ -13,6 +14,7 @@ describe('app routes', () => {
 
     beforeEach(async () => {
         await knex('matches').insert([
+            { winner: 'scrooge', loser: 'minnie', created_at: daysAgo(50) },
             { winner: 'mickey', loser: 'goofy', created_at: daysAgo(2) },
             { winner: 'mickey', loser: 'donald', created_at: daysAgo(1) }
         ])
@@ -20,11 +22,12 @@ describe('app routes', () => {
 
     afterEach(async () => {
         await knex('matches').del().whereNotNull('id')
+        await knex('seasons').del().whereNotNull('id')
     })
 
     describe('GET /api/matches', () => {
 
-        it('returns match data from db', async () => {
+        it('returns match data from db from last 1 month when season is not ongoing', async () => {
             const response = await supertest(app).get('/api/matches')
 
             expect(response.body).toEqual([
@@ -42,15 +45,55 @@ describe('app routes', () => {
                 }
             ])
         })
+
+        it('return match data since beginning of season if season is ongoing', async () => {
+            await knex('seasons').insert([{ start: daysAgo(100), end: daysInFuture(1) }])
+            
+            const response = await supertest(app).get('/api/matches')
+
+            expect(response.body).toEqual([
+                {
+                    id: expect.any(Number),
+                    created_at: expect.any(String),
+                    loser: 'minnie',
+                    winner: 'scrooge',
+                },
+                {
+                    id: expect.any(Number),
+                    created_at: expect.any(String),
+                    loser: 'goofy',
+                    winner: 'mickey',
+                },
+                {
+                    id: expect.any(Number),
+                    created_at: expect.any(String),
+                    loser: 'donald',
+                    winner: 'mickey',
+                }
+            ])
+        })
     })
 
     describe('GET /api/ladder', () => {
-        it('returns player list with ratings from db', async () => {
+        it('returns player with ratings from last month from db', async () => {
             const response = await supertest(app).get('/api/ladder')
 
             expect(response.body).toEqual([
                 { name: 'mickey', rating: 1531 },
                 { name: 'donald', rating: 1485 },
+                { name: 'goofy', rating: 1484 },
+            ])
+        })
+
+        it('returns player list for the whole season from db if season is ongoing', async () => {
+            await knex('seasons').insert([{ start: daysAgo(100), end: daysInFuture(1) }])
+            const response = await supertest(app).get('/api/ladder')
+
+            expect(response.body).toEqual([
+                { name: 'mickey', rating: 1531 },
+                { name: 'scrooge', rating: 1516 },
+                { name: 'donald', rating: 1485 },
+                { name: 'minnie', rating: 1484 },
                 { name: 'goofy', rating: 1484 },
             ])
         })

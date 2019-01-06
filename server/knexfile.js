@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = {
     development: {
         client: 'pg',
-        connection: process.env.DATABASE_URL || 'postgresql://wunderpong:wunderpong@localhost:5432/d89mdaft5ocbms'
+        connection: process.env.DATABASE_URL || 'postgresql://wunderpong:wunderpong@localhost:65432/wunderpong'
     },
     production: {
         client: 'pg',
