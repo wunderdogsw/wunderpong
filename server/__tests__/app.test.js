@@ -12,17 +12,19 @@ jest.mock('node-cron', () => ({ schedule: jest.fn() }))
 
 describe('app routes', () => {
 
-    beforeEach(async () => {
+    beforeEach(async done => {
         await knex('matches').insert([
             { winner: 'scrooge', loser: 'minnie', created_at: daysAgo(50) },
             { winner: 'mickey', loser: 'goofy', created_at: daysAgo(2) },
             { winner: 'mickey', loser: 'donald', created_at: daysAgo(1) }
         ])
+        done()
     })
 
-    afterEach(async () => {
+    afterEach(async done => {
         await knex('matches').del().whereNotNull('id')
         await knex('seasons').del().whereNotNull('id')
+        done()
     })
 
     describe('GET /api/matches', () => {
@@ -48,7 +50,7 @@ describe('app routes', () => {
 
         it('return match data since beginning of season if season is ongoing', async () => {
             await knex('seasons').insert([{ start: daysAgo(100), end: daysInFuture(1) }])
-            
+
             const response = await supertest(app).get('/api/matches')
 
             expect(response.body).toEqual([
