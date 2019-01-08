@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test:server": "jest server",
+    "test:server": "jest -i server",
     "predev": "echoascii dev && run-s helper:cleanup-uploads",
     "dev": "run-p dev:client dev:server",
     "dev:client": "parcel ./client/index.html --no-cache -d __dev__/client",
