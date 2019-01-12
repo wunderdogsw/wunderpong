@@ -10,6 +10,7 @@ services:
 - docker
 before_script:
 - docker-compose up -d
+- sleep 15
 script:
 - docker build . -t $DOCKER_REPO:$COMMIT --network host
 after_script:
