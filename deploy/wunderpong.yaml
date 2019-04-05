@@ -16,6 +16,11 @@ spec:
         image: 766261213300.dkr.ecr.eu-west-1.amazonaws.com/wunderpong:latest
         ports:
         - containerPort: 3000
+        resources:
+          requests:
+            cpu: "50m"
+          limits:
+            cpu: "100m"
         env:
           - name: NODE_ENV
             value: production
@@ -36,11 +41,6 @@ spec:
               secretKeyRef:
                 name: wunderpong-database-config
                 key: password
-          - name: SLACK_WEBHOOK_URL
-            valueFrom:
-              secretKeyRef:
-                name: 'wunderpong-slack'
-                key: webhook
 
 ---
 
