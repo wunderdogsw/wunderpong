@@ -29,7 +29,7 @@ describe('app routes', () => {
 
     describe('GET /api/matches', () => {
 
-        it('returns match data from db from last 1 month when season is not ongoing', async () => {
+        xit('returns match data from db from last 1 month when season is not ongoing', async () => {
             const response = await supertest(app).get('/api/matches')
 
             expect(response.body).toEqual([
