@@ -127,6 +127,7 @@
     "whatwg-fetch": "^2.0.4"
   },
   "resolutions": {
-    "@babel/preset-env": "7.13.8"
+    "@babel/preset-env": "7.13.8",
+    "parcel-bundler/node-forge": "^0.10.0"
   }
 }
