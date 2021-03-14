@@ -110,7 +110,7 @@
     "lottie-web": "^5.3.1",
     "node-cron": "^2.0.3",
     "node-fetch": "^2.1.2",
-    "pg": "^7.4.3",
+    "pg": "^8.5.1",
     "pg-format": "^1.0.4",
     "prompt-confirm": "^2.0.4",
     "qrcode.react": "^0.8.0",
@@ -125,5 +125,8 @@
     "supertest": "^3.3.0",
     "tween": "^0.9.0",
     "whatwg-fetch": "^2.0.4"
+  },
+  "resolutions": {
+    "@babel/preset-env": "7.13.8"
   }
 }
